@@ -1,7 +1,6 @@
 import React from "react";
 const token = localStorage.getItem('token');
 const AuthStr = 'Bearer '+token;
-const userId = localStorage.getItem('userItem')
 class Balance extends React.Component {
 	// Constructor
 	constructor(props) {
@@ -10,7 +9,6 @@ class Balance extends React.Component {
 			balances: [],
 			DataisLoaded: false,
             'quantitySend':0,
-            'coinId':''
 		};
 	}
     handleClick = (event) =>{
@@ -23,8 +21,7 @@ class Balance extends React.Component {
         if(this.state.quantitySend > quantityCoin){
             alert('The amount of coins sent cannot be greater than the amount available')
         }
-       this.setState({'coinId': coinId})
-       
+
     }
 	// ComponentDidMount is used to
 	// execute the code
