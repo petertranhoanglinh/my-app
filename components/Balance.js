@@ -9,6 +9,7 @@ class Balance extends React.Component {
 			balances: [],
 			DataisLoaded: false,
             'quantitySend':0,
+            'contract':'',
 		};
 	}
     handleClick = (event) =>{
@@ -21,6 +22,37 @@ class Balance extends React.Component {
         if(this.state.quantitySend > quantityCoin){
             alert('The amount of coins sent cannot be greater than the amount available')
         }
+        var myHeaders = new Headers();
+        myHeaders.append("Accept-Language", "application/json");
+        myHeaders.append("Authorization",AuthStr);
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({
+        "contract": this.state.contract,
+        "coinId": coinId,
+        "quantity": this.state.quantitySend
+        });
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://localhost:8089/api/account/withdraw", requestOptions)
+        .then(response => {
+            if(response.ok){
+                return response.json()
+            }})
+        .then(result => {
+            if(result.returnMessage === 'fail'){
+                alert('address does not exist');
+            }else{
+                alert(result.returnMessage);
+                this.componentDidMount();
+            }
+        })
+        .catch(error => console.log('error', error));
 
     }
 	// ComponentDidMount is used to
@@ -80,7 +112,7 @@ class Balance extends React.Component {
                            <input type="number" name="quantitySend" class="form-control" onChange={this.handleClick}/>
                            </td>
                            <td className="text-td-cl">
-                           <input type="text" name="" class="form-control"/>
+                           <input type="text" name="contract" class="form-control" onChange={this.handleClick}/>
                            </td>
                            <td className="text-td-cl"> 
                            <button type="button" class="btn btn-primary" onClick={()=>this.withdraw(coin.quantityReal, coin.coinId)}>Withdraw</button></td>
