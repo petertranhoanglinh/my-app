@@ -8,11 +8,23 @@ class Balance extends React.Component {
 		super(props);
 		this.state = {
 			balances: [],
-			DataisLoaded: false
+			DataisLoaded: false,
+            'quantitySend':0,
+            'coinId':''
 		};
 	}
-    handleClick() {
-        console.log('this is:', this);
+    handleClick = (event) =>{
+        // alert(quantityCoin)
+        this.setState({[event.target.name] : event.target.value})
+        
+    }
+
+    withdraw = (quantityCoin, coinId) => {
+        if(this.state.quantitySend > quantityCoin){
+            alert('The amount of coins sent cannot be greater than the amount available')
+        }
+       this.setState({'coinId': coinId})
+       
     }
 	// ComponentDidMount is used to
 	// execute the code
@@ -65,16 +77,16 @@ class Balance extends React.Component {
                            <td className="text-td-cl">{coin.accountId}</td>
                            <td className="text-td-cl">{coin.coinId}</td>
                            <td className="text-td-cl">{coin.contract}</td>
-                           <td className="text-td-cl">{coin.quantityCoin}</td>
+                           <td className="text-td-cl">{coin.quantityReal}</td>
                            <td className="text-td-cl">{coin.timeUpdate}</td>
                            <td className="text-td-cl">
-                           <input type="number" name="" class="form-control"/>
+                           <input type="number" name="quantitySend" class="form-control" onChange={this.handleClick}/>
                            </td>
                            <td className="text-td-cl">
                            <input type="text" name="" class="form-control"/>
                            </td>
                            <td className="text-td-cl"> 
-                           <button type="button" class="btn btn-primary">Withdraw</button></td>
+                           <button type="button" class="btn btn-primary" onClick={()=>this.withdraw(coin.quantityReal, coin.coinId)}>Withdraw</button></td>
                        </tr>
                            )
                     }

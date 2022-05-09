@@ -7,7 +7,7 @@ export default class Login extends React.Component{
             "username":"",
             "password":"",
         }
-        this.setParams = this.setParams.bind(this) ;
+        //this.setParams = this.setParams.bind(this) ;
         
     }
     setParams  = (event) =>{
