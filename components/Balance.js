@@ -80,7 +80,7 @@ class Balance extends React.Component {
 	render() {
 		const { DataisLoaded, balances } = this.state;
 		if (!DataisLoaded) return <div>
-			<h1 className="text-title-cl"> Pleses login... </h1> </div> ;
+			<h1 className="text-title-cl"> Plesea login... </h1> </div> ;
 		else 
         return (
         <div> 
