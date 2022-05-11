@@ -21,6 +21,7 @@ class Balance extends React.Component {
     withdraw = (quantityCoin, coinId) => {
         if(this.state.quantitySend > quantityCoin){
             alert('The amount of coins sent cannot be greater than the amount available')
+            return false;
         }
         var myHeaders = new Headers();
         myHeaders.append("Accept-Language", "application/json");
