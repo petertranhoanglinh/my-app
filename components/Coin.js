@@ -8,7 +8,9 @@ class Coin extends React.Component {
 		super(props);
 		this.state = {
 			coins: [],
-			DataisLoaded: false
+			DataisLoaded: false,
+            searchCoin:'',
+            notMap:false,
 		};
 	}
 
@@ -21,25 +23,46 @@ class Coin extends React.Component {
         
     }
 
-	// ComponentDidMount is used to
-	// execute the code
-	componentDidMount() {
-        let headersList = {
-            "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-            "Accept-Language": "application/json",
-            "Authorization" : AuthStr
-           } 
-        fetch("http://localhost:8089/api/coin/getAllCoin", { 
-             method: "GET",
-             headers: headersList
-         }).then((res) => res.json())
-           .then((json) => {
-               console.log(json);
-               this.setState({
-                   coins: json,
-                   DataisLoaded: true
-               });
-           })
+    searchCoin =()=>{
+        
+        var coinId = this.state.searchCoin;
+        fetch("http://localhost:8089/api/coin/getMaketCap/"+coinId)
+        .then((res) => res.json())
+        .then((json) => {
+            var arr = new Array(json);
+            console.log(json);
+            this.componentDidMount(arr);
+        })
+        
+    }
+    setPram=(event)=>{
+        this.setState({[event.target.name] : event.target.value.trim()});
+    }
+	componentDidMount(item) {
+        if(item ==null){
+            let headersList = {
+                "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+                "Accept-Language": "application/json",
+                "Authorization" : AuthStr
+               } 
+            fetch("http://localhost:8089/api/coin/getAllCoin", { 
+                 method: "GET",
+                 headers: headersList
+             }).then((res) => res.json())
+               .then((json) => {
+                   console.log(json);
+                   this.setState({
+                       coins: json,
+                       DataisLoaded: true
+                   });
+               })
+        }else{
+            this.setState({
+                coins:item,
+                DataisLoaded:true
+            })
+        }  
+       
    }
 		
 			
@@ -49,7 +72,12 @@ class Coin extends React.Component {
 			<h1 className="text-title-cl"> Plesea login.... </h1> </div> ;
 		else 
         return (
-        <div> 
+        <div>
+            
+            
+                <input type='text' name = 'searchCoin' onChange={this.setPram} placeholder='Search coinId'/>
+                <button onClick={this.searchCoin}>search</button>
+             
             <table className="table table-hover">
                 <thead>
                     <tr>
