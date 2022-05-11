@@ -10,7 +10,6 @@ class Coin extends React.Component {
 			coins: [],
 			DataisLoaded: false,
             searchCoin:'',
-            notMap:false,
 		};
 	}
 
@@ -69,8 +68,8 @@ class Coin extends React.Component {
 	render() {
 		const { DataisLoaded, coins } = this.state;
 		if (!DataisLoaded) return <div>
-			<h1 className="text-title-cl"> Plesea login.... </h1> </div> ;
-		else 
+			<h6 className="text-title-cl"> Plesea login.... </h6> </div> ;
+        else  
         return (
         <div>
             
@@ -89,7 +88,7 @@ class Coin extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {
+                    {  
                        coins.map(
                        coin =>
                        <tr key = {coin.coinId}>
