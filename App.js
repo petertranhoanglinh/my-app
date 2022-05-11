@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Balance from './components/Balance';
 import Coin from './components/Coin';
 import SignUp from './screen/SignUp';
+import Profile from './components/Profile';
 function App(){
   return (
     <div>
@@ -19,6 +20,7 @@ function App(){
         <Route path='/balance' element = {<Balance></Balance>}/>
         <Route path='/coin' element = {<Coin></Coin>}/>
         <Route path='/signUp' element = {<SignUp></SignUp>}/>
+        <Route path='/profile' element = {<Profile></Profile>}/>
       </Routes>
     </div>
   )
