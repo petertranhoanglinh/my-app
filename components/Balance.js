@@ -10,6 +10,7 @@ class Balance extends React.Component {
 			DataisLoaded: false,
             'quantitySend':0,
             'contract':'',
+            addCoin:''
 		};
 	}
     handleClick = (event) =>{
@@ -76,6 +77,41 @@ class Balance extends React.Component {
                });
            })
    }
+   setPram=(event)=>{
+    this.setState({[event.target.name] : event.target.value.trim()});
+   }
+
+   addCoin =()=>{
+        
+    var coinId = this.state.addCoin;
+    var myHeaders = new Headers();
+    myHeaders.append("Accept-Language", "application/json");
+    myHeaders.append("Authorization",AuthStr);
+    myHeaders.append("Cookie", "Cookie_1=value");
+
+    var raw = "";
+
+    var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+    };
+
+    fetch("http://localhost:8089/api/account/add/"+coinId, requestOptions)
+    .then(response => response.json())
+    .then(result => {console.log(result)
+    if(result.statusCode === 1030){
+        alert(result.message)
+        return false;
+    }else{
+        alert('suscess');
+    }
+    this.componentDidMount();
+    })
+    .catch(error => {
+        console.log('error', error)});
+   }
 		
 			
 	render() {
@@ -84,7 +120,9 @@ class Balance extends React.Component {
 			<h1 className="text-title-cl"> Plesea login... </h1> </div> ;
 		else 
         return (
-        <div> 
+        <div>
+            <input type='text' name = 'addCoin' onChange={this.setPram} placeholder='add Balance'/>
+                <button onClick={this.addCoin}>Add</button> 
             <table className="table table-hover">
                 <thead>
                     <tr>
