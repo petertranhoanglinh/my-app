@@ -29,7 +29,10 @@ class Coin extends React.Component {
         .then((res) => res.json())
         .then((json) => {
             var arr = new Array(json);
-            console.log(json);
+            if(json.statusCode ===2){
+                alert(json.message)
+                return false;
+            }
             this.componentDidMount(arr);
         })
         
@@ -84,7 +87,6 @@ class Coin extends React.Component {
                         <th className="text-th-cl">CoinName</th>
                         <th className="text-th-cl">Price</th>
                         <th className="text-th-cl">Update-time</th>
-                        <th className="text-th-cl">update Price</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,11 +94,10 @@ class Coin extends React.Component {
                        coins.map(
                        coin =>
                        <tr key = {coin.coinId}>
-                           <td className="text-td-cl">{coin.coinId}</td>
-                           <td className="text-td-cl">{coin.coinName}</td>
-                           <td className="text-td-cl">{coin.price}</td>
-                           <td className="text-td-cl">{coin.timeUpdate}</td>
-                           <td><button onClick={()=>this.UpdatePrice(coin.coinId)} className ="btn btn-primary">update</button></td>
+                           <td className="text-td-cl" onClick={()=>this.UpdatePrice(coin.coinId)}>{coin.coinId}</td>
+                           <td className="text-td-cl" onClick={()=>this.UpdatePrice(coin.coinId)}>{coin.coinName}</td>
+                           <td className="text-td-cl" onClick={()=>this.UpdatePrice(coin.coinId)}>{coin.price}</td>
+                           <td className="text-td-cl" onClick={()=>this.UpdatePrice(coin.coinId)}>{coin.timeUpdate}</td>
                        </tr>
                            )
                     }
