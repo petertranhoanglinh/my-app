@@ -126,14 +126,15 @@ class Balance extends React.Component {
             <table className="table table-hover">
                 <thead>
                     <tr>
-                        <th className="text-th-cl">ID</th>
                         <th className="text-th-cl">AccountId</th>
                         <th className="text-th-cl">CoinId</th>
                         <th className="text-th-cl">Contract</th>
-                        <th className="text-th-cl">QuantityCoin</th>
-                        <th className="text-th-cl">TimeUpdate</th>
-                        <th className="text-th-cl">QuantitySend</th>
-                        <th className="text-th-cl">Address</th>
+                        <th className="text-th-cl">Amount of coins</th>
+                        <th className="text-th-cl">Time Update</th>
+                        <th className="text-th-cl">Cost</th>
+                        <th className="text-th-cl">Total amount (USD)</th>
+                        <th className="text-th-cl">Amount of coin sent</th>
+                        <th className="text-th-cl">Contract to send</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -141,12 +142,13 @@ class Balance extends React.Component {
                        balances.map(
                        coin =>
                        <tr key = {coin.id}>
-                           <td className="text-td-cl">{coin.id}</td>
                            <td className="text-td-cl">{coin.accountId}</td>
                            <td className="text-td-cl">{coin.coinId}</td>
                            <td className="text-td-cl">{coin.contract}</td>
                            <td className="text-td-cl">{coin.quantityReal}</td>
                            <td className="text-td-cl">{coin.timeUpdate}</td>
+                           <td className="text-td-cl">{coin.price}</td>
+                           <td className="text-td-cl">{coin.value}</td>
                            <td className="text-td-cl">
                            <input type="number" name="quantitySend" class="form-control" onChange={this.handleClick}/>
                            </td>
