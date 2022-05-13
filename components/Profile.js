@@ -1,91 +1,146 @@
-function Profile(){
-    return (
+import React from "react";
+const token = localStorage.getItem('token');
+const AuthStr = 'Bearer '+token;
+class Profile extends React.Component {
 
-        <div className="container">
-          {/* Account page navigation*/}
-          <hr className="mt-0 mb-4" />
-          <div className="row">
-            <div className="col-xl-4">
-              {/* Profile picture card*/}
-              <div className="card mb-4 mb-xl-0">
-                <div className="card-header">Profile Picture</div>
-                <div className="card-body text-center">
-                  {/* Profile picture image*/}
-                  <img className="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
-                  {/* Profile picture help block*/}
-                  <div className="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                  {/* Profile picture upload button*/}
-                  <button className="btn btn-primary" type="button">Upload new image</button>
+	// Constructor
+	constructor(props) {
+		super(props);
+		this.state = {
+			user:{},
+			DataisLoaded: false,
+      imgData:'',
+      isUpload:false,
+      photo:'',
+		};
+	}
+  onImageChange = event => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      this.setState({
+        photo: URL.createObjectURL(img),
+        imgData:img
+      });
+    }
+  };
+  setPram=(event)=>{
+        this.setState({[event.target.name] : event.target.value.trim()});
+    }
+  upLoad= ()=>{
+    
+  }
+	componentDidMount(item) {
+            let headersList = {
+                "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+                "Accept-Language": "application/json",
+                "Authorization" : AuthStr
+               } 
+            fetch("http://localhost:8089/api/getUserDetail", { 
+                 method: "GET",
+                 headers: headersList
+             }).then((res) => res.json())
+               .then((json) => {
+                   console.log(json);
+                   this.setState({
+                       user: json,
+                       DataisLoaded: true,
+                       photo: json.photo
+                   });
+               })
+   }	
+	render() {
+		const { DataisLoaded, user } = this.state;
+		if (!DataisLoaded) return <div>
+			<h6 className="text-title-cl"> Plesea login.... </h6> </div> ;
+        else  
+        return (
+
+          <div className="container">
+            {/* Account page navigation*/}
+            <hr className="mt-0 mb-4" />
+            <div className="row">
+              <div className="col-xl-4">
+                {/* Profile picture card*/}
+                <div className="card mb-4 mb-xl-0">
+                  <div className="card-header">Profile Picture</div>
+                  <div className="card-body text-center">
+                    {/* Profile picture image*/}
+                    <img className="img-account-profile rounded-circle mb-2" src = {this.state.photo} alt="" onChange={this.changeHandler}/>
+                    {/* Profile picture help block*/}
+                    
+                    <div className="small font-italic text-muted mb-4">Upload your avatar </div>
+                    {/* Profile picture upload button*/}
+                    <input type="file" name="myImage" onChange={this.onImageChange} />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-xl-8">
-              {/* Account details card*/}
-              <div className="card mb-4">
-                <div className="card-header">Users Details</div>
-                <div className="card-body">
-                  <form>
-                    {/* Form Group (username)*/}
-                    <div className="mb-3">
-                      <label className="small mb-1" htmlFor="inputUsername">Username</label>
-                      <input className="form-control" id="inputUsername" type="text" placeholder="Enter your username" defaultValue="username" />
-                    </div>
-                    {/* Form Row*/}
-                    <div className="row gx-3 mb-3">
-                      {/* Form Group (first name)*/}
-                      <div className="col-md-6">
-                        <label className="small mb-1" htmlFor="inputFirstName">UserId</label>
-                        <input className="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" defaultValue="Valerie" />
+              <div className="col-xl-8">
+                {/* Account details card*/}
+                <div className="card mb-4">
+                  <div className="card-header">Users Details</div>
+                  <div className="card-body">
+                    <form>
+                      {/* Form Group (username)*/}
+                      <div className="mb-3">
+                        <label className="small mb-1" htmlFor="inputUsername">Username</label>
+                        <input className="form-control" id="inputUsername" type="text"  value={user.userName}/>
                       </div>
-                      {/* Form Group (last name)*/}
-                      <div className="col-md-6">
-                        <label className="small mb-1" htmlFor="inputLastName">Country</label>
-                        <input className="form-control" id="inputLastName" type="text" placeholder="Enter your last name" defaultValue="Luna" />
+                      {/* Form Row*/}
+                      <div className="row gx-3 mb-3">
+                        {/* Form Group (first name)*/}
+                        <div className="col-md-6">
+                          <label className="small mb-1" htmlFor="inputFirstName">UserId</label>
+                          <input className="form-control" id="inputFirstName" type="text" value={user.userId} />
+                        </div>
+                        {/* Form Group (last name)*/}
+                        <div className="col-md-6">
+                          <label className="small mb-1" htmlFor="inputLastName">Country</label>
+                          <input className="form-control" id="inputLastName" type="text"  value={user.ctrId}/>
+                        </div>
                       </div>
-                    </div>
-                    {/* Form Row        */}
-                    <div className="row gx-3 mb-3">
-                      {/* Form Group (organization name)*/}
-                      <div className="col-md-6">
-                        <label className="small mb-1" htmlFor="inputOrgName">Rank</label>
-                        <select name="" id="input" class="form-control" required="required">
-                             <option value="DIAMOND">Diamond (400$/year)</option>
-                             <option value="GOLD">Gold (300$/year)</option>
-                             <option value="SIVEL">Sivel (100$/year)</option>
-                             <option value="STANDARD">Standard (free)</option>
-                         </select>
+                      {/* Form Row        */}
+                      <div className="row gx-3 mb-3">
+                        {/* Form Group (organization name)*/}
+                        <div className="col-md-6">
+                          <label className="small mb-1" htmlFor="inputOrgName">Rank</label>
+                          <select name="" id="input" class="form-control" value={user.rankCd}>
+                               <option value={"DIAMOND"}>Diamond (400$/year)</option>
+                               <option value={"GOLD"}>Gold (300$/year)</option>
+                               <option value={"SIVEL"}>Sivel (100$/year)</option>
+                               <option value={"STANDARD"}>Standard (free)</option>
+                           </select>
+                        </div>
+                        {/* Form Group (location)*/}
+                        <div className="col-md-6">
+                          <label className="small mb-1" htmlFor="inputLocation">Role</label>
+                           <select name="" id="input" class="form-control" value={user.role}>
+                               <option value="ADMIN">ADMIN</option>
+                               <option value="USER">USER</option>
+                           </select>
+                           
+                        </div>
                       </div>
-                      {/* Form Group (location)*/}
-                      <div className="col-md-6">
-                        <label className="small mb-1" htmlFor="inputLocation">Role</label>
-                         <select name="" id="input" class="form-control" required="required">
-                             <option value="ADMIN">ADMIN</option>
-                             <option value="USER">USER</option>
-                         </select>
-                         
+                      <div className="row gx-3 mb-3">
+                        {/* Form Group (phone number)*/}
+                        <div className="col-md-6">
+                          <label className="small mb-1" htmlFor="inputPhone"  >Referral code</label>
+                          <input className="form-control" id="inputPhone" type="text" disabled value={user.referralCode}/>
+                        </div>
+                        {/* Form Group (birthday)*/}
+                        <div className="col-md-6">
+                          <label className="small mb-1" htmlFor="inputBirthday">Number of people you have referred</label>
+                          <input className="form-control" id="inputBirthday" type="text" name="birthday"disabled value={user.rate}/>
+                        </div>
                       </div>
-                    </div>
-                    <div className="row gx-3 mb-3">
-                      {/* Form Group (phone number)*/}
-                      <div className="col-md-6">
-                        <label className="small mb-1" htmlFor="inputPhone">Referral code</label>
-                        <input className="form-control" id="inputPhone" type="text"/>
-                      </div>
-                      {/* Form Group (birthday)*/}
-                      <div className="col-md-6">
-                        <label className="small mb-1" htmlFor="inputBirthday">Time Update</label>
-                        <input className="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" defaultValue="06/10/1988" />
-                      </div>
-                    </div>
-                    {/* Save changes button*/}
-                    <button className="btn btn-primary btnSaveProfile"  type="button">Save changes</button>
-                  </form>
+                      {/* Save changes button*/}
+                      <button className="btn btn-primary btnSaveProfile"  type="button" onClick={this.upLoad}>Save changes</button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        );
+    }
 }
-
 export default Profile;

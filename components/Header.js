@@ -5,6 +5,7 @@ export default class Header extends React.Component{
     constructor(props){
         super(props)
         var userItem = localStorage.getItem('userItem');
+        var photo = localStorage.getItem('photo');
         if(userItem == null){
             this.state = {
                 text:'',
@@ -13,7 +14,7 @@ export default class Header extends React.Component{
         }else{
             this.state = {
                 text:userItem,
-                image:'https://i.pinimg.com/originals/f8/ee/fc/f8eefcbe4d08d731669690c716b2d9c9.png'
+                image:photo
             } 
         }
         this.logout = this.logout.bind(this) ;
@@ -60,14 +61,14 @@ export default class Header extends React.Component{
                     <li> <Link to={'/balance'}><i className="fa fa-briefcase" /><span>Balance</span></Link></li>
                     <li><Link to={'/product'}><i className="fa fa-gears" /><span>Product</span></Link></li>
                     <li><Link to={'/coin'}><i className="fa fa-users" /><span>Coin</span></Link></li>
-                    <li><a href="#"><i className="fa fa-pie-chart" /><span>Reports</span></a></li>
-                    <li><a href="#"><i className="fa fa-envelope" /><span>Messages</span></a></li>		
-                    <li><a href="#"><i className="fa fa-bell" /><span>Notifications</span></a></li>
+                    <li><a href="s"><i className="fa fa-pie-chart" /><span>Reports</span></a></li>
+                    <li><a href="n"><i className="fa fa-envelope" /><span>Messages</span></a></li>		
+                    <li><a href="b"><i className="fa fa-bell" /><span>Notifications</span></a></li>
                     <li className="dropdown">
-                      <a href="#" data-toggle="dropdown" className="dropdown-toggle user-action"><img src={this.state.image} className="avatar" alt="Avatar" />{this.state.text}<b className="caret" /></a>
+                      <a href="a" data-toggle="dropdown" className="dropdown-toggle user-action"><img src={this.state.image} className="avatar" alt="Avatar" />{this.state.text}<b className="caret" /></a>
                       <ul className="dropdown-menu">
                         <li> <Link to={'/profile'}><i className="fa fa-user-o" /> Profile</Link></li>
-                        <li><a href="#"><i className="fa fa-calendar-o" /> Calendar</a></li>
+                        <li><a href="s"><i className="fa fa-calendar-o" /> Calendar</a></li>
                         <li className="divider" />
                         <li> <Link to={'/signUp'}><i className="fa fa-calendar-o" /> SignUp</Link></li>
                         <li> <Link to={'/login'}><i className="material-icons"></i> Login</Link></li>
