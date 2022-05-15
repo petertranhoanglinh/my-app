@@ -9,17 +9,16 @@ class Profile extends React.Component {
 		this.state = {
 			user:{},
 			DataisLoaded: false,
-      imgData:'',
+      imgData:[],
       isUpload:false,
       photo:'',
 		};
 	}
   onImageChange = event => {
     if (event.target.files && event.target.files[0]) {
-      let img = event.target.files[0];
       this.setState({
-        photo: URL.createObjectURL(img),
-        imgData:img
+        photo: URL.createObjectURL(event.target.files[0]),
+        imgData:event.target.files[0] 
       });
     }
   };
@@ -27,6 +26,30 @@ class Profile extends React.Component {
         this.setState({[event.target.name] : event.target.value.trim()});
     }
   upLoad= ()=>{
+            let headersList = {
+            "Accept": "*/*",
+            "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+            "Authorization": AuthStr,
+            "Accept-Language": "application/json",
+            "Content-Type": "application/json"
+            }
+
+            const formData = new FormData();
+            formData.append('files', this.state.imgData);
+
+            let bodyContent = JSON.stringify({
+                imgData:formData
+            });
+
+            fetch("http://localhost:8089/api/user/upload", { 
+              method: "POST",
+              body: bodyContent,
+              headers: headersList
+            }).then(function(response) {
+              return response.text();
+            }).then(function(data) {
+              console.log(data);
+            })
     
   }
 	componentDidMount(item) {
@@ -36,7 +59,7 @@ class Profile extends React.Component {
                 "Authorization" : AuthStr
                } 
             fetch("http://localhost:8089/api/getUserDetail", { 
-                 method: "GET",
+                 method: "GET", 
                  headers: headersList
              }).then((res) => res.json())
                .then((json) => {
