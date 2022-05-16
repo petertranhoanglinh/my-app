@@ -29,6 +29,9 @@ class Profile extends React.Component {
   setPram=(event)=>{
         this.setState({[event.target.name] : event.target.value.trim()});
     }
+  openImg=()=>{
+    window.location.href = Url.URL_IMAGE+this.state.imageFileNameOld;
+  }
   upLoad= ()=>{
             let headersList = {
             "Accept": "*/*",
@@ -95,7 +98,7 @@ class Profile extends React.Component {
                   <div className="card-header">Profile Picture</div>
                   <div className="card-body text-center">
                     {/* Profile picture image*/}
-                    <img className="img-account-profile rounded-circle mb-2" src = {this.state.photo} alt="" onChange={this.changeHandler}/>
+                    <img className="img-account-profile rounded-circle mb-2" src = {this.state.photo} alt="" onChange={this.changeHandler} onClick = {this.openImg}/>
                     {/* Profile picture help block*/}
                     
                     <div className="small font-italic text-muted mb-4">Upload your avatar </div>
