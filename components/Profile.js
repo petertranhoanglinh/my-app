@@ -14,6 +14,7 @@ class Profile extends React.Component {
       imgData:null,
       isUpload:false,
       photo:'',
+      imageFileNameOld:""
 		};
     this.onImageChange = this.onImageChange.bind(this)
 	}
@@ -38,6 +39,7 @@ class Profile extends React.Component {
 
            const formData = new FormData();
            formData.append('imgData',   this.state.imgData);
+           formData.append('imageFileNameOld',   this.state.imageFileNameOld);
 
             // let bodyContent = JSON.stringify({
             //   imgData:formData
@@ -52,10 +54,11 @@ class Profile extends React.Component {
             }).then(function(data) {
               alert(data.returnMessage);
               console.log(data);
+              window.location.href = Url.url+"profile";
             })
     
   }
-	componentDidMount(item) {
+	componentDidMount() {
             let headersList = {
                 "User-Agent": "Thunder Client (https://www.thunderclient.com)",
                 "Accept-Language": "application/json",
@@ -70,7 +73,8 @@ class Profile extends React.Component {
                    this.setState({
                        user: json,
                        DataisLoaded: true,
-                       photo: Url.URL_IMAGE + json.photo
+                       photo: Url.URL_IMAGE + json.photo,
+                       imageFileNameOld: json.photo
                    });
                })
    }	
@@ -102,7 +106,7 @@ class Profile extends React.Component {
               </div>
               <div className="col-xl-8">
                 {/* Account details card*/}
-                <div className="card mb-4">
+                <div className="card mb-4"> 
                   <div className="card-header">Users Details</div>
                   <div className="card-body">
                     <form>
