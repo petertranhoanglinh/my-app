@@ -1,4 +1,6 @@
 import React from "react";
+import Url from '../components/Url';
+
 export default class Login extends React.Component{
 
     constructor(props){
@@ -41,7 +43,7 @@ export default class Login extends React.Component{
         .then(result => {console.log(result)
             localStorage.setItem("token" , result.jwt);
             localStorage.setItem("userItem" , result.userName);
-            localStorage.setItem("photo" , result.photo);
+            localStorage.setItem("photo" , Url.URL_IMAGE + result.photo);
             window.location.href = "http://localhost:3000/";
         })
         .catch(error => {console.log('error', error)

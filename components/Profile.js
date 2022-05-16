@@ -1,4 +1,5 @@
 import React from "react";
+import Url from "./Url"
 
 const token = localStorage.getItem('token');
 const AuthStr = 'Bearer '+token;
@@ -47,8 +48,9 @@ class Profile extends React.Component {
               body: formData,
               headers: headersList
             }).then(function(response) {
-              return response.text();
+              return response.json();
             }).then(function(data) {
+              alert(data.returnMessage);
               console.log(data);
             })
     
@@ -68,7 +70,7 @@ class Profile extends React.Component {
                    this.setState({
                        user: json,
                        DataisLoaded: true,
-                       photo: json.photo
+                       photo: Url.URL_IMAGE + json.photo
                    });
                })
    }	
