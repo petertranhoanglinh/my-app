@@ -1,4 +1,5 @@
 import React from "react";
+
 const token = localStorage.getItem('token');
 const AuthStr = 'Bearer '+token;
 class Profile extends React.Component {
@@ -9,10 +10,11 @@ class Profile extends React.Component {
 		this.state = {
 			user:{},
 			DataisLoaded: false,
-      imgData:[],
+      imgData:null,
       isUpload:false,
       photo:'',
 		};
+    this.onImageChange = this.onImageChange.bind(this)
 	}
   onImageChange = event => {
     if (event.target.files && event.target.files[0]) {
@@ -31,19 +33,18 @@ class Profile extends React.Component {
             "User-Agent": "Thunder Client (https://www.thunderclient.com)",
             "Authorization": AuthStr,
             "Accept-Language": "application/json",
-            "Content-Type": "application/json"
             }
 
-            const formData = new FormData();
-            formData.append('files', this.state.imgData);
+           const formData = new FormData();
+           formData.append('imgData',   this.state.imgData);
 
-            let bodyContent = JSON.stringify({
-                imgData:formData
-            });
+            // let bodyContent = JSON.stringify({
+            //   imgData:formData
+            // });
 
             fetch("http://localhost:8089/api/user/upload", { 
               method: "POST",
-              body: bodyContent,
+              body: formData,
               headers: headersList
             }).then(function(response) {
               return response.text();
