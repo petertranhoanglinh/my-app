@@ -99,7 +99,6 @@ class AddNotify extends React.Component {
                         <div className="col-lg-8 col-xl-6">
                             <div className="card rounded-3">
                             <div className="card-body p-4 p-md-5">
-                                <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Add Notify</h3>
                                 <div className="row">
                                     <div className="col-md-6 mb-4">
                                     <div className="form-outline datepicker">

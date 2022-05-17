@@ -61,7 +61,7 @@ export default class Header extends React.Component{
                     <li> <Link to={'/balance'}><i className="fa fa-briefcase" /><span>Balance</span></Link></li>
                     <li><Link to={'/product'}><i className="fa fa-gears" /><span>Product</span></Link></li>
                     <li><Link to={'/coin'}><i className="fa fa-users" /><span>Coin</span></Link></li>
-                    <li><a href="s"><i className="fa fa-pie-chart" /><span>Reports</span></a></li>
+                    <li><Link to = {'/a'}><i className="fa fa-pie-chart" /><span>Reports</span></Link></li>
                     <li><Link to={'/message'}><i className="fa fa-envelope" /><span>Messages</span></Link></li>		
                     <li><Link to = {'/notify'}><i className="fa fa-bell" /><span>Notifications</span></Link></li>
                     <li className="dropdown">
