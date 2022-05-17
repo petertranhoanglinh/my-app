@@ -68,7 +68,7 @@ export default class Header extends React.Component{
                       <a href="a" data-toggle="dropdown" className="dropdown-toggle user-action"><img src={this.state.image} className="avatar" alt="Avatar" />{this.state.text}<b className="caret" /></a>
                       <ul className="dropdown-menu">
                         <li> <Link to={'/profile'}><i className="fa fa-user-o" /> Profile</Link></li>
-                        <li><a href="s"><i className="fa fa-calendar-o" /> Calendar</a></li>
+                        <li><Link to={'/addNotity'}><i className="fa fa-calendar-o" /> Add Notifications</Link></li>
                         <li className="divider" />
                         <li> <Link to={'/signUp'}><i className="fa fa-calendar-o" /> SignUp</Link></li>
                         <li> <Link to={'/login'}><i className="material-icons"></i> Login</Link></li>

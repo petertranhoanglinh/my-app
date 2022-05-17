@@ -10,6 +10,7 @@ import SignUp from './screen/SignUp';
 import Profile from './components/Profile';
 import Message from './components/Message';
 import Notify from './components/Notify';
+import AddNotify from './components/AddNotify';
 function App(){
   return (
     <div>
@@ -25,6 +26,7 @@ function App(){
         <Route path='/profile' element = {<Profile></Profile>}/>
         <Route path='/message' element = {<Message></Message>}/>
         <Route path='/notify' element = {<Notify></Notify>}/>
+        <Route path='/addNotity' element = {<AddNotify></AddNotify>}/>
       </Routes>
     </div>
   )
