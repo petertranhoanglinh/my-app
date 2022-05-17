@@ -89,7 +89,7 @@ class Product extends React.Component {
                             {product.price}
                         </p>
                         <p>
-                            <a className="btn btn-primary">Mua hàng</a>
+                            <a className="btn btn-primary">Buy</a>
                         </p>
                     </div>
              </div>
