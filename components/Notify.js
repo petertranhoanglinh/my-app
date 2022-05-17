@@ -70,7 +70,7 @@ class Notify extends React.Component {
                            <td className="text-td-cl">{notify.note}</td>
                            <td className="text-td-cl">{notify.evenDate}</td>
                            <td className="text-td-cl"  onClick={()=>this.openImg(Url.URL_IMAGE+notify.image)}>
-                           <img src={Url.URL_IMAGE+notify.image} className="img-responsive"alt="Image" style={{width:'50px'}}/></td>
+                           <img src={Url.URL_IMAGE+notify.image} className="img-responsive"alt="Image" style={{width:'100px' , textAlign:'center'}}/></td>
                        </tr>
                            )
                     }
