@@ -7,8 +7,8 @@ class Product extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			coins: [],
-			DataisLoaded: true,
+			products: [],
+			DataisLoaded: false,
             searchCoin:'',
 		};
 	}
@@ -54,22 +54,20 @@ class Product extends React.Component {
                .then((json) => {
                    console.log(json);
                    this.setState({
-                       coins: json,
+                       products: json,
                        DataisLoaded: true
                    });
                })
         }else{
             this.setState({
-                coins:item,
+                products:item,
                 DataisLoaded:true
             })
         }  
        
    }
-		
-			
 	render() {
-		const { DataisLoaded, coins } = this.state;
+		const { DataisLoaded, products } = this.state;
 		if (!DataisLoaded) return <div>
 			<h6 className="text-title-cl"> Plesea login.... </h6> </div> ;
         else  
@@ -78,22 +76,27 @@ class Product extends React.Component {
                 <input type='text' name = 'searchCoin' onChange={this.setPram} placeholder='Search product'/>
                 <button onClick={this.searchCoin}>search</button>
             <div class="row" >
+            {
+                products.map(
+                    product =>
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style={{width:"50 px", padding:"20px"}}>
-              <div className="thumbnail">
+               <div className="thumbnail">
                     <img  src='https://shopapple.vn/wp-content/uploads/2021/07/iphone-12-mau-tim-purple-2021.jpg' 
                     alt="iphone 13" style={{width:"100px",height:"90px"}}/>
                     <div style={{width:"10px" , height:"90px"}}>
-                        <h4>Iphone 12 plus</h4>
+                        <h4>{product.coinId}</h4>
                         <p>
-                            250000
+                            {product.price}
                         </p>
                         <p>
                             <a className="btn btn-primary">Mua hàng</a>
                         </p>
                     </div>
              </div>
-                </div>
-            </div>
+            </div>)
+            }
+             
+        </div>
        
        </div>
 	);
