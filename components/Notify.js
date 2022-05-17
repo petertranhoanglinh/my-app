@@ -3,8 +3,10 @@ import React from "react";
 import Url from "./Url"
 const token = localStorage.getItem('token');
 const AuthStr = 'Bearer '+token;
-class Notify extends React.Component {
 
+
+class Notify extends React.Component {
+ 
 	// Constructor
 	constructor(props) {
 		super(props);
@@ -20,7 +22,6 @@ class Notify extends React.Component {
         this.setState({[event.target.name] : event.target.value.trim()});
     }
 	componentDidMount() {
-       
             let headersList = {
                 "User-Agent": "Thunder Client (https://www.thunderclient.com)",
                 "Accept-Language": "application/json",

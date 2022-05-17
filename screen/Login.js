@@ -43,7 +43,8 @@ export default class Login extends React.Component{
         .then(result => {console.log(result)
             localStorage.setItem("token" , result.jwt);
             localStorage.setItem("userItem" , result.userName);
-            localStorage.setItem("photo" , Url.URL_IMAGE + result.photo);
+            localStorage.setItem("photo" , Url.URL_IMAGE + result.userDetail.photo);
+            localStorage.setItem("userDetail" , JSON.stringify(result.userDetail));
             window.location.href = "http://localhost:3000/";
         })
         .catch(error => {console.log('error', error)
