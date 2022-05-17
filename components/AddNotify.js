@@ -11,7 +11,7 @@ class AddNotify extends React.Component {
 		this.state = {
 			DataisLoaded: false,
             title:'',
-            range:'',
+            range:'DIAMOND',
             note:'',
             imageData:'',
             photo: ''
@@ -43,7 +43,9 @@ class AddNotify extends React.Component {
             }
 
            const formData = new FormData();
-           formData.append('imageData',   this.state.imageData);
+           if(this.state.photo !== ""){
+            formData.append('imageData',   this.state.imageData);
+           }
            formData.append('title',   this.state.title);
            formData.append('range',   this.state.range);
            formData.append('note',   this.state.note);
