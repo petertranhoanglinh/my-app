@@ -28,6 +28,8 @@ export default class Header extends React.Component{
        if(localStorage.getItem('token') != null){
         localStorage.removeItem("token");
         localStorage.removeItem("userItem");
+        localStorage.removeItem("photo");
+        localStorage.removeItem("userDetail");
         window.location.href = "http://localhost:3000/login";
        }
     }
