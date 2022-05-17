@@ -75,13 +75,14 @@ class Product extends React.Component {
         else  
         return (
         <div className="container">
-                <input type='text' name = 'searchCoin' onChange={this.setPram} placeholder='Search coinId'/>
+                <input type='text' name = 'searchCoin' onChange={this.setPram} placeholder='Search product'/>
                 <button onClick={this.searchCoin}>search</button>
-            <div class="row" style={{width:"50 px", paddingBottom:"10px"}}>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
+            <div class="row" >
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style={{width:"50 px", padding:"20px"}}>
               <div className="thumbnail">
-                    <img  src='https://shopapple.vn/wp-content/uploads/2021/07/iphone-12-mau-tim-purple-2021.jpg' alt="iphone 13"/>
-                    <div style={{width:"10px" , height:"30px"}}>
+                    <img  src='https://shopapple.vn/wp-content/uploads/2021/07/iphone-12-mau-tim-purple-2021.jpg' 
+                    alt="iphone 13" style={{width:"100px",height:"90px"}}/>
+                    <div style={{width:"10px" , height:"90px"}}>
                         <h4>Iphone 12 plus</h4>
                         <p>
                             250000
