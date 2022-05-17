@@ -8,6 +8,7 @@ import Balance from './components/Balance';
 import Coin from './components/Coin';
 import SignUp from './screen/SignUp';
 import Profile from './components/Profile';
+import Message from './components/Message';
 function App(){
   return (
     <div>
@@ -21,6 +22,7 @@ function App(){
         <Route path='/coin' element = {<Coin></Coin>}/>
         <Route path='/signUp' element = {<SignUp></SignUp>}/>
         <Route path='/profile' element = {<Profile></Profile>}/>
+        <Route path='/message' element = {<Message></Message>}/>
       </Routes>
     </div>
   )
