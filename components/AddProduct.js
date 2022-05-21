@@ -14,6 +14,7 @@ class AddProduct extends React.Component {
 		this.state = {
 			DataisLoaded: false,
 		};
+    //console.log(this.props.params.testValue);
     this.onImageChange = this.onImageChange.bind(this)
     this.setPram = this.setPram.bind(this) ;
 	}

@@ -1,7 +1,7 @@
 import './App.css'
 import Login from './screen/Login';
 import Header from './components/Header'
-import {Routes, Route ,useLocation} from 'react-router-dom'
+import {Routes, Route} from 'react-router-dom'
 import Product from './components/Product';
 import Home from './components/Home';
 import Balance from './components/Balance';
@@ -15,7 +15,6 @@ import AddProduct from './components/AddProduct';
 import ListProduct from './components/ListProduct';
 
 function App(){
-  let data = useLocation();
   return (
     <div>
       <Header></Header>
@@ -32,7 +31,7 @@ function App(){
         <Route path='/notify' element = {<Notify></Notify>}/>
         <Route path='/addNotity' element = {<AddNotify></AddNotify>}/>
         <Route path='/addProduct' element = { <AddProduct></AddProduct>}/>
-        <Route path='/setProduct' element = {<AddProduct pdtcd = {data.pdtcd}/>}/>
+        <Route path='/setPdt' element = {<AddProduct/>}/>
        <Route path='/listProduct' element = {<ListProduct></ListProduct>}/>
       </Routes>
     </div>
