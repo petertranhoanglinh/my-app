@@ -14,6 +14,9 @@ class ListProduct extends React.Component {
             'pdtName' : '*',
 		};
 	}
+    openImg=(src)=>{
+        window.location.href = src;
+      }
     searchProduct =()=>{
         var pdtName = this.state.pdtName;
         let headersList = {
@@ -71,7 +74,7 @@ class ListProduct extends React.Component {
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style={{width:"40 px", padding:"20px"}}>
                <div className="thumbnail">
                     <img  src={Url.URL_IMAGE + product.image} 
-                    alt="iphone 13" style={{width:"60px",height:"90px"}}/>
+                    alt="iphone 13" style={{width:"80px",height:"100px"}} onClick={()=>this.openImg(Url.URL_IMAGE+product.image)}/>
                     <div style={{width:"10px" , height:"110px"}}>
                         <h4>{product.pdtName}</h4>
                         <p>
