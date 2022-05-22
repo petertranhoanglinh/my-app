@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react/style-prop-object */
-import React, {Component} from 'react';
-import {Helmet} from 'react-helmet';
-class Footer extends Component{
-  render(){
-    return(
-      
-        <footer className="text-center text-lg-start bg-light text-muted reszeFooter">
+import React, { Component } from 'react';
+import { Helmet } from 'react-helmet';
+class Footer extends Component {
+  render() {
+    return (
+
+      <footer className="text-center text-lg-start bg-light text-muted reszeFooter">
         <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-         
+
           <div className="me-5 d-none d-lg-block">
             <span>Get connected with us on social networks:</span>
           </div>
@@ -32,19 +32,19 @@ class Footer extends Component{
               <i className="fab fa-github"></i>
             </a>
           </div>
-       
+
         </section>
         <section className="">
           <div className="container text-center text-md-start mt-5">
-         
+
             <div className="row mt-3">
-            
+
               <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-               
+
                 <h6 className="text-uppercase fw-bold mb-4">
                   <i className="fas fa-gem me-3"></i>Hoang Linh
                 </h6>
-               
+
                 <p>
                   Design web
                 </p>
@@ -72,7 +72,7 @@ class Footer extends Component{
                 </p>
               </div>
               <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-             
+
                 <h6 className="text-uppercase fw-bold mb-4">
                   Contact
                 </h6>
@@ -83,13 +83,13 @@ class Footer extends Component{
                 </p>
                 <p><i className="fas fa-phone me-3"></i> + 84 582 216 3211</p>
               </div>
-          
+
             </div>
-         
+
           </div>
         </section>
         <Helmet>
-                <style>{'Footer { background-color: #101010;  }'}</style>
+          <style>{'Footer { background-color: #101010;  }'}</style>
         </Helmet>
       </footer>
     )

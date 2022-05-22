@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom'
+import Url from "./Url";
 export default class Header extends React.Component{
 
     constructor(props){
@@ -30,7 +31,7 @@ export default class Header extends React.Component{
         localStorage.removeItem("userItem");
         localStorage.removeItem("photo");
         localStorage.removeItem("userDetail");
-        window.location.href = "http://localhost:3000/login";
+        window.location.href = Url.URL + "login";
        }
     }
 

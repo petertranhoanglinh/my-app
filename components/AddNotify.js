@@ -55,7 +55,7 @@ class AddNotify extends React.Component {
             //   imgData:formData
             // });
 
-            fetch("http://localhost:8089/api/notify/save", { 
+            fetch(Url.URL_REST+"api/notify/save", { 
               method: "POST",
               body: formData,
               headers: headersList
@@ -74,7 +74,7 @@ class AddNotify extends React.Component {
                 "Accept-Language": "application/json",
                 "Authorization" : AuthStr
                } 
-            fetch("http://localhost:8089/api/getUserDetail", { 
+            fetch(Url.URL_REST+"api/getUserDetail", { 
                  method: "GET", 
                  headers: headersList
              }).then((res) => res.json())
