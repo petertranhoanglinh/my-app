@@ -11,7 +11,8 @@ class ListProduct extends React.Component {
             products: [],
             DataisLoaded: false,
             'pdtName': '*',
-            pdtKinds:[]
+            pdtKinds:[],
+            'kind':'*'
         };
     }
     openImg = (src) => {
@@ -19,7 +20,15 @@ class ListProduct extends React.Component {
     }
     searchProduct = () => {
         var pdtName = this.state.pdtName;
-        fetch(Url.URL_REST+"api/product/getProduct/" + pdtName, {
+        var kind = this.state.kind;
+        if(pdtName === ""){
+            pdtName = "*";
+        }
+        if(kind === ""){
+            kind = "*";
+        }
+        
+        fetch(Url.URL_REST+"api/product/getProduct/" + pdtName +"/" + kind, {
             method: "GET",
             headers: Url.headersList
         }).then((res) => res.json())
@@ -35,7 +44,7 @@ class ListProduct extends React.Component {
         this.setState({ [event.target.name]: event.target.value.trim() });
     }
     componentDidMount() {
-        fetch(Url.URL_REST+"api/product/getProduct/*", {
+        fetch(Url.URL_REST+"api/product/getProduct/*/*", {
             method: "GET",
             headers: Url.headersList
         }).then((res) => res.json())
@@ -64,9 +73,9 @@ class ListProduct extends React.Component {
             return (
                 <div>
                     <div className="container">
-                        <input type='text' name='pdtName' onChange={this.setPram} placeholder='Search product' />
-                        <button onClick={this.searchProduct}>search</button>
-                        <select>
+                        <input  name='pdtName' onChange={this.setPram} placeholder='Search product' />
+                        <select  onChange={this.setPram} name = "kind">
+                        <option value= "*">All Product kind</option>
                             {
                                 pdtKinds.map(
                                     product =>
@@ -74,6 +83,7 @@ class ListProduct extends React.Component {
                                 )
                             }
                         </select>
+                        <button onClick={this.searchProduct}>search</button>
                         
                         <div class="row" >
                             {

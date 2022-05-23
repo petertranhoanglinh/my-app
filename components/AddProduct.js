@@ -33,13 +33,6 @@ class AddProduct extends React.Component {
     this.setState({range: event.target.value});  
   }
   upLoad= ()=>{
-            let headersList = {
-            "Accept": "*/*",
-            "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-            "Authorization": AuthStr,
-            "Accept-Language": "application/json",
-            }
-
            const formData = new FormData();
            if(this.state.photo !== ""){
             formData.append('imageData',   this.state.imageData);
@@ -55,7 +48,7 @@ class AddProduct extends React.Component {
             fetch("http://localhost:8089/api/notify/save", { 
               method: "POST",
               body: formData,
-              headers: headersList
+              headers: Url.headersList
             }).then(function(response) {
               return response.json();
             }).then(function(data) {
@@ -66,14 +59,9 @@ class AddProduct extends React.Component {
     
   }
 	componentDidMount() {
-            let headersList = {
-                "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-                "Accept-Language": "application/json",
-                "Authorization" : AuthStr
-               } 
-            fetch(Url.URL_REST+"getUserDetail", { 
+            fetch(Url.URL_REST+"api/getUserDetail", { 
                  method: "GET", 
-                 headers: headersList
+                 headers: Url.headersList
              }).then((res) => res.json())
                .then((json) => {
                    console.log(json);
@@ -165,9 +153,6 @@ class AddProduct extends React.Component {
                 </div>
               </div> {/* /.form-group */}
               <div className="form-group">
-                <div className="col-sm-9 col-sm-offset-3">
-                  <span className="help-block">*Required fields</span>
-                </div>
               </div>
               <button type="submit" className="btn btn-primary btn-block">Register</button>
           </div>

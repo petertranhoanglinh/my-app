@@ -30,7 +30,7 @@ class Profile extends React.Component {
     this.setState({ [event.target.name]: event.target.value.trim() });
   }
   openImg = () => {
-    window.location.href = Url.URL_IMAGE + this.state.imageFileNameOld;
+    window.location.href = Url.URL_REST + this.state.imageFileNameOld;
   }
   upLoad = () => {
     let headersList = {
@@ -95,7 +95,6 @@ class Profile extends React.Component {
             <div className="col-xl-4">
               {/* Profile picture card*/}
               <div className="card mb-4 mb-xl-0">
-                <div className="card-header">Profile Picture</div>
                 <div className="card-body text-center">
                   {/* Profile picture image*/}
                   <img className="img-account-profile rounded-circle mb-2" src={this.state.photo} alt="" onChange={this.changeHandler} onClick={this.openImg} />
@@ -110,7 +109,6 @@ class Profile extends React.Component {
             <div className="col-xl-8">
               {/* Account details card*/}
               <div className="card mb-4">
-                <div className="card-header">Users Details</div>
                 <div className="card-body">
                   <form>
                     {/* Form Group (username)*/}
