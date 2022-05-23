@@ -1,6 +1,4 @@
 import React from "react";
-const token = localStorage.getItem('token');
-const AuthStr = 'Bearer ' + token;
 class Message extends React.Component {
 
   // Constructor

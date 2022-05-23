@@ -2,8 +2,6 @@
 import React from "react";
 import Url from "./Url"
 
-const token = localStorage.getItem('token');
-const AuthStr = 'Bearer '+token;
 const userDetail = JSON.parse(localStorage.getItem('userDetail'));
 class AddProduct extends React.Component {
 
