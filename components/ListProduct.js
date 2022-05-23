@@ -1,8 +1,7 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
 import { Link } from 'react-router-dom'
 import Url from "./Url"
-const token = localStorage.getItem('token');
-const AuthStr = 'Bearer ' + token;
 class ListProduct extends React.Component {
 
     // Constructor
@@ -12,6 +11,7 @@ class ListProduct extends React.Component {
             products: [],
             DataisLoaded: false,
             'pdtName': '*',
+            pdtKinds:[]
         };
     }
     openImg = (src) => {
@@ -19,14 +19,9 @@ class ListProduct extends React.Component {
     }
     searchProduct = () => {
         var pdtName = this.state.pdtName;
-        let headersList = {
-            "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-            "Accept-Language": "application/json",
-            "Authorization": AuthStr
-        }
-        fetch(Url.URL_REST+"product/getProduct/" + pdtName, {
+        fetch(Url.URL_REST+"api/product/getProduct/" + pdtName, {
             method: "GET",
-            headers: headersList
+            headers: Url.headersList
         }).then((res) => res.json())
             .then((json) => {
                 this.setState({
@@ -40,14 +35,9 @@ class ListProduct extends React.Component {
         this.setState({ [event.target.name]: event.target.value.trim() });
     }
     componentDidMount() {
-        let headersList = {
-            "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-            "Accept-Language": "application/json",
-            "Authorization": AuthStr
-        }
         fetch(Url.URL_REST+"api/product/getProduct/*", {
             method: "GET",
-            headers: headersList
+            headers: Url.headersList
         }).then((res) => res.json())
             .then((json) => {
                 this.setState({
@@ -55,10 +45,19 @@ class ListProduct extends React.Component {
                     DataisLoaded: true
                 });
             })
+        fetch(Url.URL_REST+"api/product/getPdtKind", {
+                method: "GET",
+                headers: Url.headersList
+            }).then((res) => res.json())
+                .then((json) => {
+                    this.setState({
+                        pdtKinds: json
+                    });
+                })
 
     }
     render() {
-        const { DataisLoaded, products } = this.state;
+        const { DataisLoaded, products, pdtKinds } = this.state;
         if (!DataisLoaded) return <div>
             <h6 className="text-title-cl"> Plesea login.... </h6> </div>;
         else
@@ -67,6 +66,15 @@ class ListProduct extends React.Component {
                     <div className="container">
                         <input type='text' name='pdtName' onChange={this.setPram} placeholder='Search product' />
                         <button onClick={this.searchProduct}>search</button>
+                        <select>
+                            {
+                                pdtKinds.map(
+                                    product =>
+                                      <option value={product.pdtKind}>{product.pdtKind}</option>
+                                )
+                            }
+                        </select>
+                        
                         <div class="row" >
                             {
                                 products.map(
@@ -75,8 +83,8 @@ class ListProduct extends React.Component {
                                             <div className="thumbnail">
                                                 <img src={Url.URL_REST + product.image}
                                                     alt="image" style={{ width: "80px", height: "100px" }} onClick={() => this.openImg(Url.URL_REST + product.image)} />
-                                                <div style={{ width: "10px", height: "110px" }}>
-                                                    <h4>{product.pdtName}</h4>
+                                                <div style={{ width: "110px", height: "110px" , textAlign: 'center'}}>
+                                                    <h6>{product.pdtName}</h6>
                                                     <p>
                                                         {product.price} {product.kindCoin}
                                                     </p>

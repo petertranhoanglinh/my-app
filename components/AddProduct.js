@@ -71,7 +71,7 @@ class AddProduct extends React.Component {
                 "Accept-Language": "application/json",
                 "Authorization" : AuthStr
                } 
-            fetch("http://localhost:8089/api/getUserDetail", { 
+            fetch(Url.URL_REST+"getUserDetail", { 
                  method: "GET", 
                  headers: headersList
              }).then((res) => res.json())

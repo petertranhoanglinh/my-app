@@ -32,7 +32,7 @@ export default class Login extends React.Component{
         redirect: 'follow'
         };
 
-        fetch("http://localhost:8089/api/authenticate", requestOptions)
+        fetch(Url.URL_REST+"api/authenticate", requestOptions)
         .then(response =>{
             console.log('response la' + response);
             if(response.ok){
@@ -42,10 +42,8 @@ export default class Login extends React.Component{
         })     
         .then(result => {console.log(result)
             localStorage.setItem("token" , result.jwt);
-            localStorage.setItem("userItem" , result.userName);
-            localStorage.setItem("photo" , Url.URL_IMAGE + result.userDetail.photo);
             localStorage.setItem("userDetail" , JSON.stringify(result.userDetail));
-            window.location.href = "http://localhost:3000/";
+            window.location.href = Url.URL;
         })
         .catch(error => {console.log('error', error)
         alert("userName or Password are wrong ")

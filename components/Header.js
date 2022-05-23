@@ -1,12 +1,14 @@
 import React from "react";
 import {Link} from 'react-router-dom'
 import Url from "./Url";
+const token = localStorage.getItem('token');
+const AuthStr = 'Bearer ' + token;
 export default class Header extends React.Component{
-
+ 
     constructor(props){
         super(props)
         var userItem = localStorage.getItem('userItem');
-        var photo = localStorage.getItem('photo');
+        
         if(userItem == null){
             this.state = {
                 text:'',
@@ -14,8 +16,8 @@ export default class Header extends React.Component{
             } 
         }else{
             this.state = {
-                text:userItem,
-                image:photo
+                text:'',
+                image:''
             } 
         }
         this.logout = this.logout.bind(this) ;
@@ -34,7 +36,25 @@ export default class Header extends React.Component{
         window.location.href = Url.URL + "login";
        }
     }
+    componentDidMount() {
 
+      let headersList = {
+        "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+        "Accept-Language": "application/json",
+        "Authorization": AuthStr
+        }
+        fetch(Url.URL_REST + "api/getUserDetail", {
+            method: "GET",
+            headers: headersList
+        }).then((res) => res.json())
+            .then((json) => {
+                console.log(json);
+                this.setState({
+                  image: Url.URL_REST + json.photo,
+                  text:json.userName
+                });
+        })
+     }
     render(){
         return (
             <div>
@@ -68,7 +88,7 @@ export default class Header extends React.Component{
                     <li><Link to={'/message'}><i className="fa fa-envelope" /><span>Messages</span></Link></li>		
                     <li><Link to = {'/notify'}><i className="fa fa-bell" /><span>Notifications</span></Link></li>
                     <li className="dropdown">
-                      <a href="a" data-toggle="dropdown" className="dropdown-toggle user-action"><img src={this.state.image} className="avatar" alt="Avatar" />{this.state.text}<b className="caret" /></a>
+                      <a href="a" data-toggle="dropdown" className="dropdown-toggle user-action"><img src={this.state.image} className="avatar" alt="Login ? " />{this.state.text}<b className="caret" /></a>
                       <ul className="dropdown-menu">
                         <li> <Link to={'/profile'}><i className="fa fa-user-o" /> Profile</Link></li>
                         <li><Link to={'/addNotity'}><i className="fa fa-calendar-o" /> Add Notifications</Link></li>
