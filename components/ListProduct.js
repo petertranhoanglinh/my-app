@@ -99,7 +99,7 @@ class ListProduct extends React.Component {
                                                         {product.price} {product.kindCoin}
                                                     </p>
                                                     <p>
-                                                        <Link to="/setPdt" params={{ pdtCd: product.pdtCd }} className="btn">Buy</Link>
+                                                        <Link to={'/productDetail/' + product.pdtId}  className="btn">Buy</Link>
                                                     </p>
                                                 </div>
                                             </div>

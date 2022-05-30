@@ -13,6 +13,7 @@ import Notify from './components/Notify';
 import AddNotify from './components/AddNotify';
 import AddProduct from './components/AddProduct';
 import ListProduct from './components/ListProduct';
+import ProductDetail from './components/ProductDetail';
 
 function App(){
   return (
@@ -30,11 +31,12 @@ function App(){
         <Route path='/message' element = {<Message></Message>}/>
         <Route path='/notify' element = {<Notify></Notify>}/>
         <Route path='/addNotity' element = {<AddNotify></AddNotify>}/>
-        <Route path='/addProduct' element = { <AddProduct></AddProduct>}/>
-        <Route path='/setPdt' element = {<AddProduct/>}/>
+        <Route path='/addProduct' element = { <AddProduct/>}/>
+        <Route path='/productDetail/:pdtId' element = {<ProductDetail></ProductDetail> }/>
        <Route path='/listProduct' element = {<ListProduct></ListProduct>}/>
       </Routes>
     </div>
   )
 }
+
 export default App;

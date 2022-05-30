@@ -8,7 +8,7 @@ class AddProduct extends React.Component {
 	// Constructor
 	constructor(props) {
 		super(props);
-        console.log(this.props.pdtcd)
+        console.log(this.props.routeParams)
 		this.state = {
 			DataisLoaded: false,
 		};
