@@ -1,7 +1,5 @@
 import React from "react";
 import Url from "./Url";
-const token = localStorage.getItem('token');
-const AuthStr = 'Bearer ' + token;
 
 class Balance extends React.Component {
     // Constructor
@@ -12,7 +10,8 @@ class Balance extends React.Component {
             DataisLoaded: false,
             'quantitySend': 0,
             'contract': '',
-            addCoin: ''
+            addCoin: '',
+            searchCoin: ''
         };
     }
     handleClick = (event) => {
@@ -28,10 +27,6 @@ class Balance extends React.Component {
                 alert('The amount of coins sent cannot be greater than the amount available')
                 return false;
             }
-            var myHeaders = new Headers();
-            myHeaders.append("Accept-Language", "application/json");
-            myHeaders.append("Authorization", AuthStr);
-            myHeaders.append("Content-Type", "application/json");
             var raw = JSON.stringify({
                 "contract": this.state.contract,
                 "coinId": coinId,
@@ -40,7 +35,7 @@ class Balance extends React.Component {
     
             var requestOptions = {
                 method: 'POST',
-                headers: myHeaders,
+                headers: Url.headersList,
                 body: raw,
                 redirect: 'follow'
             };
@@ -70,14 +65,9 @@ class Balance extends React.Component {
     // ComponentDidMount is used to
     // execute the code
     componentDidMount() {
-        let headersList = {
-            "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-            "Accept-Language": "application/json",
-            "Authorization": AuthStr
-        }
-        fetch(Url.URL_REST + "api/account/balance", {
+        fetch(Url.URL_REST + "api/account/balance/*", {
             method: "GET",
-            headers: headersList
+            headers: Url.headersList
         }).then((res) => res.json())
             .then((json) => {
                 console.log(json);
@@ -90,20 +80,30 @@ class Balance extends React.Component {
     setPram = (event) => {
         this.setState({ [event.target.name]: event.target.value.trim() });
     }
+    searchCoin =() =>{
+        fetch(Url.URL_REST + "api/account/balance/"+this.state.searchCoin, {
+            method: "GET",
+            headers: Url.headersList
+        }).then((res) => res.json())
+            .then((json) => {
+                console.log(json);
+                this.setState({
+                    balances: json,
+                    DataisLoaded: true
+                });
+            })
+    }
 
     addCoin = () => {
 
         var coinId = this.state.addCoin;
-        var myHeaders = new Headers();
-        myHeaders.append("Accept-Language", "application/json");
-        myHeaders.append("Authorization", AuthStr);
-        myHeaders.append("Cookie", "Cookie_1=value");
+        
 
         var raw = "";
 
         var requestOptions = {
             method: 'POST',
-            headers: myHeaders,
+            headers: Url.headersList,
             body: raw,
             redirect: 'follow'
         };
@@ -133,8 +133,10 @@ class Balance extends React.Component {
         else
             return (
                 <div>
-                    <input type='text' name='addCoin' onChange={this.setPram} placeholder='add Balance' />
-                    <button onClick={this.addCoin}>Add</button>
+                    <input type='text' name='searchCoin' onChange={this.setPram} placeholder='Search Balace' />
+                    <button type="button" class="btn btn-default" aria-label="Left Align" onClick={this.searchCoin} >
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
                     <table className="table table-hover">
                         <thead>
                             <tr>
@@ -178,6 +180,10 @@ class Balance extends React.Component {
                             }
                         </tbody>
                     </table>
+                    <input type='text' name='addCoin' onChange={this.setPram} placeholder='add Balance' />
+                    <button onClick={this.addCoin} type="button" class="btn btn-default" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
                 </div>
             );
     }
