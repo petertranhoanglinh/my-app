@@ -57,7 +57,7 @@ class Profile extends React.Component {
     }).then(function (data) {
       alert(data.returnMessage);
       console.log(data);
-      window.location.href = Url.url + "profile";
+      window.location.href = Url.URL + "profile";
     })
 
   }
