@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
 import Url from "./Url"
-const token = localStorage.getItem('token');
-const AuthStr = 'Bearer ' + token;
 
 
 class Notify extends React.Component {
@@ -13,23 +11,40 @@ class Notify extends React.Component {
         this.state = {
             notifys: [],
             DataisLoaded: false,
+            showResults: false
         };
     }
     openImg = (src) => {
         window.location.href = src;
     }
+    delete = (id) =>{
+        if (window.confirm('Do you want to delete this notification?')){
+            fetch(Url.URL_REST+"api/notify/delete/"+id, {
+                method: "PUT",
+                headers: Url.headersList
+            }).then((res) => res.json())
+                .then((json) => {
+                    alert(json.returnMessage);
+                    this.componentDidMount();
+             })
+        }else{
+            return false;
+        }
+        
+    }
     setPram = (event) => {
         this.setState({ [event.target.name]: event.target.value.trim() });
     }
+    
     componentDidMount() {
-        let headersList = {
-            "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-            "Accept-Language": "application/json",
-            "Authorization": AuthStr
+        if(Url.userDetail.role === 'ADMIN'){
+            this.setState({
+                showResults : true
+            });
         }
         fetch(Url.URL_REST+"api/notify/getAll", {
             method: "GET",
-            headers: headersList
+            headers: Url.headersList
         }).then((res) => res.json())
             .then((json) => {
                 console.log(json);
@@ -41,7 +56,7 @@ class Notify extends React.Component {
 
     }
     render() {
-        const { DataisLoaded, notifys } = this.state;
+        const { DataisLoaded, notifys , showResults} = this.state;
         if (!DataisLoaded) return <div>
             <h6 className="text-title-cl"> Plesea login.... </h6> </div>;
         else
@@ -50,7 +65,6 @@ class Notify extends React.Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                                <th className="text-th-cl">Id</th>
                                 <th className="text-th-cl">Title</th>
                                 <th className="text-th-cl">Content</th>
                                 <th className="text-th-cl">Even Date</th>
@@ -62,12 +76,16 @@ class Notify extends React.Component {
                                 notifys.map(
                                     notify =>
                                         <tr key={notify.coinId}>
-                                            <td className="text-td-cl">{notify.id}</td>
                                             <td className="text-td-cl">{notify.title}</td>
                                             <td className="text-td-cl">{notify.note}</td>
                                             <td className="text-td-cl">{notify.evenDate}</td>
                                             <td className="text-td-cl" onClick={() => this.openImg(Url.URL_REST + notify.image)}>
                                                 <img src={Url.URL_REST + notify.image} className="img-responsive" alt="Image" style={{ width: '70px', textAlign: 'center' }} /></td>
+                                            {showResults ? <td>
+                                                <button onClick={() => this.delete(notify.id)} type="button" class="btn btn-default" aria-label="Left Align">
+                                                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </td> : null}
                                         </tr>
                                 )
                             }

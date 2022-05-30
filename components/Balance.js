@@ -22,42 +22,49 @@ class Balance extends React.Component {
     }
 
     withdraw = (quantityCoin, coinId) => {
-        if (this.state.quantitySend > quantityCoin) {
-            alert('The amount of coins sent cannot be greater than the amount available')
-            return false;
+        if (window.confirm('Do you want to send coins?'))
+        {     
+            if (this.state.quantitySend > quantityCoin) {
+                alert('The amount of coins sent cannot be greater than the amount available')
+                return false;
+            }
+            var myHeaders = new Headers();
+            myHeaders.append("Accept-Language", "application/json");
+            myHeaders.append("Authorization", AuthStr);
+            myHeaders.append("Content-Type", "application/json");
+            var raw = JSON.stringify({
+                "contract": this.state.contract,
+                "coinId": coinId,
+                "quantity": this.state.quantitySend
+            });
+    
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+    
+            fetch(Url.URL_REST + "api/account/withdraw", requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                })
+                .then(result => {
+                    if (result.returnMessage === 'fail') {
+                        alert('address does not exist');
+                    } else {
+                        alert(result.returnMessage);
+                        this.componentDidMount();
+                    }
+                })
+                .catch(error => console.log('error', error));
         }
-        var myHeaders = new Headers();
-        myHeaders.append("Accept-Language", "application/json");
-        myHeaders.append("Authorization", AuthStr);
-        myHeaders.append("Content-Type", "application/json");
-        var raw = JSON.stringify({
-            "contract": this.state.contract,
-            "coinId": coinId,
-            "quantity": this.state.quantitySend
-        });
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch(Url.URL_REST + "api/account/withdraw", requestOptions)
-            .then(response => {
-                if (response.ok) {
-                    return response.json()
-                }
-            })
-            .then(result => {
-                if (result.returnMessage === 'fail') {
-                    alert('address does not exist');
-                } else {
-                    alert(result.returnMessage);
-                    this.componentDidMount();
-                }
-            })
-            .catch(error => console.log('error', error));
+        else
+        {
+          return false;
+        }
 
     }
     // ComponentDidMount is used to
@@ -140,6 +147,7 @@ class Balance extends React.Component {
                                 <th className="text-th-cl">Total amount (USD)</th>
                                 <th className="text-th-cl">Amount of coin sent</th>
                                 <th className="text-th-cl">Contract to send</th>
+                                <th className="text-th-cl">Send</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -161,7 +169,10 @@ class Balance extends React.Component {
                                                 <input type="text" name="contract" class="form-control" onChange={this.handleClick} />
                                             </td>
                                             <td className="text-td-cl">
-                                                <button type="button" class="btn btn-primary" onClick={() => this.withdraw(coin.quantityReal, coin.coinId)}>Withdraw</button></td>
+                                                <button onClick={() => this.withdraw(coin.quantityReal, coin.coinId)} type="button" class="btn btn-default" aria-label="Left Align">
+                                                   <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                                                </button>
+                                            </td>
                                         </tr>
                                 )
                             }

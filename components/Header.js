@@ -1,8 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom'
 import Url from "./Url";
-const token = localStorage.getItem('token');
-const AuthStr = 'Bearer ' + token;
 export default class Header extends React.Component{
  
     constructor(props){
@@ -37,15 +35,9 @@ export default class Header extends React.Component{
        }
     }
     componentDidMount() {
-
-      let headersList = {
-        "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-        "Accept-Language": "application/json",
-        "Authorization": AuthStr
-        }
         fetch(Url.URL_REST + "api/getUserDetail", {
             method: "GET",
-            headers: headersList
+            headers: Url.headersList
         }).then((res) => res.json())
             .then((json) => {
                 console.log(json);
