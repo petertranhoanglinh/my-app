@@ -3,7 +3,6 @@ import Url from "./Url"
 
 const token = localStorage.getItem('token');
 const AuthStr = 'Bearer '+token;
-const userDetail = JSON.parse(localStorage.getItem('userDetail'));
 class AddNotify extends React.Component {
 
 	// Constructor
@@ -89,8 +88,6 @@ class AddNotify extends React.Component {
 		const { DataisLoaded} = this.state;
 		if (!DataisLoaded) return <div>
 			<h6 className="text-title-cl"> Plesea login.... </h6> </div> ;
-    if(userDetail.role !== "ADMIN") return <div>
-     <h6 className="text-title-cl"> You do not have permission to add notifications.... </h6> </div>
         else  
         return (
             <div>
