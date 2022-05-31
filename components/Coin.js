@@ -1,5 +1,6 @@
 import React from "react";
 import Util from "./Util";
+import Pagination from "react-js-pagination";
 const token = localStorage.getItem('token');
 const AuthStr = 'Bearer ' + token;
 class Coin extends React.Component {
@@ -19,6 +20,25 @@ class Coin extends React.Component {
             .then((json) => {
                 console.log(json);
                 this.componentDidMount();
+            })
+
+    }
+
+    handlePageChange(pageNumber) {
+        console.log(`active page is ${pageNumber}`);
+        //  alert(this.state.activePage);
+        this.setState({ activePage: pageNumber });
+
+        fetch(Util.URL_REST + "api/coin/getAllCoin/" + pageNumber, {
+            method: "GET",
+            headers: Util.headersList
+        }).then((res) => res.json())
+            .then((json) => {
+                console.log(json);
+                this.setState({
+                    coins: json,
+                    DataisLoaded: true
+                });
             })
 
     }
@@ -43,14 +63,9 @@ class Coin extends React.Component {
     }
     componentDidMount(item) {
         if (item == null) {
-            let headersList = {
-                "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-                "Accept-Language": "application/json",
-                "Authorization": AuthStr
-            }
-            fetch(Util.URL_REST + "api/coin/getAllCoin", {
+            fetch(Util.URL_REST + "api/coin/getAllCoin/" + 1, {
                 method: "GET",
-                headers: headersList
+                headers: Util.headersList
             }).then((res) => res.json())
                 .then((json) => {
                     console.log(json);
@@ -104,6 +119,12 @@ class Coin extends React.Component {
                             }
                         </tbody>
                     </table>
+                    <Pagination
+                        activePage={this.state.activePage}
+                        itemsCountPerPage={10}
+                        totalItemsCount={4500}
+                        onChange={this.handlePageChange.bind(this)}
+                    />
                 </div>
             );
     }
