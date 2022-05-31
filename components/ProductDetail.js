@@ -56,7 +56,7 @@ const ProductDetail = () =>{
                 </div>
               </div>
               <div className="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
-                <h2 className="name">
+                <h2 className="name" style={{color:'black'}}>
                   {state.product.pdtName}         
                 </h2>
                 <hr />
@@ -81,16 +81,8 @@ const ProductDetail = () =>{
                     <div className="tab-pane fade" id="specifications">
                       <br />
                       <dl className>
-                        <dt>Gravina</dt>
-                        <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
-                        <dd>Donec id elit non mi porta gravida at eget metus.</dd>
-                        <dd>Eget lacinia odio sem nec elit.</dd>
-                        <br />
-                        <dt>Test lists</dt>
-                        <dd>A description list is perfect for defining terms.</dd>
-                        <br />
-                        <dt>Altra porta</dt>
-                        <dd>Vestibulum id ligula porta felis euismod semper</dd>
+                        <dt>Connect</dt>
+                        <dd>{state.product.note}</dd>
                       </dl>
                     </div>
                     <div className="tab-pane fade" id="reviews">

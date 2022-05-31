@@ -1,128 +1,138 @@
 import React from "react";
-export default class SignUp extends React.Component{
+import Util from "../components/Util";
+export default class SignUp extends React.Component {
 
-    constructor(props){
-        super(props)
-        this.state = {
-            "userId":"",
-            "password":"",
-            "rePassword":"",
-            "userName":"",
-            "rankCd":"",
-            "role":"",
-            "ctrId":"",
-            "refferralCode":"",
-        }
-        this.setParams = this.setParams.bind(this) ;
-        
+  constructor(props) {
+    super(props)
+    this.state = {
+      "userId": "",
+      "password": "",
+      "rePassword": "",
+      "userName": "",
+      "rankCd": "STANDARD",
+      "role": "USER",
+      "ctrId": "",
+      "refferralCode": "",
     }
-    setParams  = (event) =>{
-        this.setState({[event.target.name] : event.target.value.trim()})
+    this.setParams = this.setParams.bind(this);
 
+  }
+  setParams = (event) => {
+    this.setState({ [event.target.name]: event.target.value.trim() })
+
+  }
+  signUp = () => {
+    if (this.state.password !== this.state.rePassword) {
+      alert("password incorrect")
+      return false;
     }
-    signUp = () =>{
-        if(this.state.password !== this.state.rePassword){
-            alert("password incorrect")
-            return false;
-        }
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        var raw = JSON.stringify({
-            "userId": this.state.userId ,
-            "password": this.state.password ,
-            "userName": this.state.userName ,
-            "rankCd": this.state.rankCd ,
-            "role": this.state.role ,
-            "ctrId": this.state.ctrId ,
-            "rate": 0,
-            "refferralCode":this.state.refferralCode 
-        });
-
-        var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-        };
-
-        fetch("http://localhost:8089/api/addUser", requestOptions)
-        .then(response =>{
-            console.log(response)
-            if(response.ok){
-                return response.json()
-            }
-            throw Error(response.status)
-        })     
-        .then(result => {
-            console.log(result)
-            alert("suscess Register");
-        })
-        .catch(error => {console.log('error', error)
-         alert("userId has used");
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({
+      "userId": this.state.userId,
+      "password": this.state.password,
+      "userName": this.state.userName,
+      "rankCd": this.state.rankCd,
+      "role": this.state.role,
+      "ctrId": this.state.ctrId,
+      "rate": 0,
+      "refferralCode": this.state.refferralCode
     });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch(Util.URL_REST+"api/addUser", requestOptions)
+      .then(response => {
+        console.log(response)
+        if (response.ok) {
+          return response.json()
+        }
+        throw Error(response.status)
+      })
+      .then(result => {
+        console.log(result)
+        alert("suscess Register");
+      })
+      .catch(error => {
+        console.log('error', error)
+        alert("userId has used");
+      });
     window.location.reload(false);
-    }
-    render(){
-        return (
-            <section className="vh-100 bg-image" style={{backgroundImage: 'url("https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp")'}}>
-              <div className="mask d-flex align-items-center h-100 gradient-custom-3">
-                <div className="container h-100">
-                  <div className="row d-flex justify-content-center align-items-center h-100">
-                    <div className="col-12 col-md-9 col-lg-7 col-xl-6">
-                      <div className="card" style={{borderRadius: '15px'}}>
-                        <div className="card-body p-5">
-                          <h2 className="text-uppercase text-center mb-5">Create an account</h2>
-                          <form>
-                            <div className="form-outline mb-4">
-                              <input  onChange={this.setParams} type="text" id="form3Example1cg" className="form-control form-control-lg" name = "userId"/>
-                              <label className="form-label" htmlFor="form3Example1cg">UserId</label>
-                            </div>
-                            <div className="form-outline mb-4">
-                              <input onChange={this.setParams}  type="text" id="form3Example3cg" className="form-control form-control-lg" name = "userName" />
-                              <label className="form-label" htmlFor="form3Example3cg">UserName</label>
-                            </div>
-                            <div className="form-outline mb-4">
-                              <input type="password" onChange={this.setParams} id="form3Example4cg" className="form-control form-control-lg"  name = "password"/>
-                              <label className="form-label" htmlFor="form3Example4cg" >Password</label>
-                            </div>
-                            <div className="form-outline mb-4">
-                              <input type="password" onChange={this.setParams} id="form3Example4cdg" className="form-control form-control-lg"  name = "rePassword" />
-                              <label className="form-label" htmlFor="form3Example4cdg">Repeat your password</label>
-                            </div>
-                            <div className="form-outline mb-4">
-                              <input type="text" id="form3Example3cg" onChange={this.setParams}  className="form-control form-control-lg" name = "rankCd"   />
-                              <label className="form-label" htmlFor="form3Example3cg">RankCd</label>
-                            </div>
-                            <div className="form-outline mb-4">
-                              <input type="text" id="form3Example3cg" onChange={this.setParams}  className="form-control form-control-lg" name = "role"  />
-                              <label className="form-label" htmlFor="form3Example3cg">Role</label>
-                            </div>
-                            <div className="form-outline mb-4">
-                              <input type="text" id="form3Example3cg"  onChange={this.setParams} className="form-control form-control-lg" name = "ctrId" />
-                              <label className="form-label" htmlFor="form3Example3cg">ctrId</label>
-                            </div>
-                            <div className="form-outline mb-4">
-                              <input type="text" id="form3Example3cg" onChange={this.setParams}  className="form-control form-control-lg" name = "refferralCode" />
-                              <label className="form-label" htmlFor="form3Example3cg">Refferral Code</label>
-                            </div>
-                            <div className="form-check d-flex justify-content-center mb-5">
-                              <input className="form-check-input me-2" type="checkbox" defaultValue id="form2Example3cg" />
-                              <label className="form-check-label" htmlFor="form2Example3g">
-                                I agree all statements in <a href="#!" className="text-body"><u>Terms of service</u></a>
-                              </label>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                              <button type="button" className="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onClick={this.signUp}>Register</button>
-                            </div>
-                            <p className="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!" className="fw-bold text-body"><u>Login here</u></a></p>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          );
-    }
+  }
+  render() {
+    return (
+      <div className="container">
+        <h2 style={{color:"blue"}}>Registration User Welcome Lweb 0.5 </h2>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">UserId</label>
+          <div className="col-sm-9">
+            <input type="text" name = "userId" placeholder="UserId" className="form-control" autofocus 
+            onChange={this.setParams}/>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">User Name</label>
+          <div className="col-sm-9">
+            <input type="text" name ="userName" placeholder="User Name" className="form-control" autofocus 
+            onChange={this.setParams}/>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">Rank</label>
+          <div className="col-sm-9">
+            <select className="form-control" onChange={this.setParams} name = "rankCd"  value={this.state.rankCd} >
+                                            <option value="DIAMOND" disabled>Diamond</option>
+                                            <option value="GOLD" disabled>Gold</option>
+                                            <option value="SIVEL" disabled>Sivel</option>
+                                            <option value="STANDARD">Standard</option>
+            </select>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">Role</label>
+          <div className="col-sm-9">
+          <select className="form-control" onChange={this.setParams} name = "role"  value={this.state.role} >
+                                            <option value="USER">User(Standard)</option>
+                                            <option value="ADMIN" disabled>Admin(register)</option>
+          </select>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">Password*</label>
+          <div className="col-sm-9">
+            <input type="password" name="password" placeholder="Password" className="form-control" 
+            onChange={this.setParams} />
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">Confirm Password*</label>
+          <div className="col-sm-9">
+            <input type="password" name="rePassword" placeholder="Password" className="form-control" 
+            onChange={this.setParams}/>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">Country(Code Country)</label>
+          <div className="col-sm-9">
+            <input type="text" name = "ctrId" placeholder="Country" className="form-control" autofocus 
+            onChange={this.setParams} />
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">RefferralCode</label>
+          <div className="col-sm-9">
+            <input type="text" name = "refferralCode" placeholder="refferralCode" className="form-control" autofocus
+            onChange={this.setParams} />
+          </div>
+        </div>
+      
+        <button type="submit" className="btn btn-primary btn-block" onClick={this.signUp}>Register</button>
+      </div>
+    );
+  }
 }   
