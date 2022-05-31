@@ -10,14 +10,17 @@ export default class Header extends React.Component{
         if(userItem == null){
             this.state = {
                 text:'',
-                image:''
+                image:'',
+                showHide:false
             } 
         }else{
             this.state = {
                 text:'',
-                image:''
+                image:'',
+                showHide:false
             } 
         }
+        
         this.logout = this.logout.bind(this) ;
       
     }
@@ -41,6 +44,11 @@ export default class Header extends React.Component{
         }).then((res) => res.json())
             .then((json) => {
                 console.log(json);
+                if(Url.userDetail.role === 'ADMIN'){
+                  this.setState({
+                    showHide:true
+                  })
+                }
                 this.setState({
                   image: Url.URL_REST + json.photo,
                   text:json.userName
@@ -48,6 +56,7 @@ export default class Header extends React.Component{
         })
      }
     render(){
+      
         return (
             <div>
               <meta charSet="utf-8" />
@@ -83,7 +92,9 @@ export default class Header extends React.Component{
                       <a href="a" data-toggle="dropdown" className="dropdown-toggle user-action"><img src={this.state.image} className="avatar" alt="Login ? " />{this.state.text}<b className="caret" /></a>
                       <ul className="dropdown-menu">
                         <li> <Link to={'/profile'}><i className="fa fa-user-o" /> Profile</Link></li>
-                        <li><Link to={'/addNotity'}><i className="fa fa-calendar-o" /> Add Notifications</Link></li>
+                        {
+                          this.state.showHide?<li><Link to={'/addNotity'}><i className="fa fa-calendar-o" /> Add Notifications</Link></li>:null
+                        }
                         <li className="divider" />
                         <li> <Link to={'/signUp'}><i className="fa fa-calendar-o" /> SignUp</Link></li>
                         <li> <Link to={'/login'}><i className="material-icons"></i> Login</Link></li>
