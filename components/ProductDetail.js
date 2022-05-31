@@ -43,11 +43,11 @@ const ProductDetail = () =>{
                       </div>
                       {/* Slide 2 */}
                       <div className="item">
-                        <img src="https://via.placeholder.com/700x400/87CEFA/000000" className="img-responsive" alt="" />
+                        <img src={Url.URL_REST+state.product.image1} className="img-responsive" alt="" />
                       </div>
                       {/* Slide 3 */}
                       <div className="item">
-                        <img src="https://via.placeholder.com/700x400/B0C4DE/000000" className="img-responsive" alt="" />
+                        <img src={Url.URL_REST+state.product.image2} className="img-responsive" alt="" />
                       </div>
                     </div>
                     <a className="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span className="glyphicon glyphicon-chevron-left" /> </a>

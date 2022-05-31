@@ -99,7 +99,9 @@ class ListProduct extends React.Component {
                                                         {product.price} {product.kindCoin}
                                                     </p>
                                                     <p>
-                                                        <Link to={'/productDetail/' + product.pdtId}  className="btn">Buy</Link>
+                                                        <Link to={'/productDetail/' + product.pdtId}  className="btn">
+                                                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                                                        </Link>
                                                     </p>
                                                 </div>
                                             </div>

@@ -43,7 +43,6 @@ export default class Header extends React.Component{
             headers: Url.headersList
         }).then((res) => res.json())
             .then((json) => {
-                console.log(json);
                 if(Url.userDetail.role === 'ADMIN'){
                   this.setState({
                     showHide:true
