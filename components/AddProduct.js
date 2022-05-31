@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import React from "react";
-import Url from "./Url"
+import Util from "./Util"
 
 const userDetail = JSON.parse(localStorage.getItem('userDetail'));
 class AddProduct extends React.Component {
@@ -46,20 +46,20 @@ class AddProduct extends React.Component {
             fetch("http://localhost:8089/api/notify/save", { 
               method: "POST",
               body: formData,
-              headers: Url.headersList
+              headers: Util.headersList
             }).then(function(response) {
               return response.json();
             }).then(function(data) {
               alert(data.returnMessage);
               console.log(data);
-              window.location.href = Url.url+"notify";
+              window.location.href = Util.url+"notify";
             })
     
   }
 	componentDidMount() {
-            fetch(Url.URL_REST+"api/getUserDetail", { 
+            fetch(Util.URL_REST+"api/getUserDetail", { 
                  method: "GET", 
-                 headers: Url.headersList
+                 headers: Util.headersList
              }).then((res) => res.json())
                .then((json) => {
                    console.log(json);

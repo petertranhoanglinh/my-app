@@ -1,5 +1,5 @@
 import React from "react";
-import Url from "./Url";
+import Util from "./Util";
 const token = localStorage.getItem('token');
 const AuthStr = 'Bearer ' + token;
 class Coin extends React.Component {
@@ -15,7 +15,7 @@ class Coin extends React.Component {
     }
 
     UpdatePrice = (coinId) => {
-        fetch(Url.URL_REST + "api/coin/getMaketCap/" + coinId).then((res) => res.json())
+        fetch(Util.URL_REST + "api/coin/getMaketCap/" + coinId).then((res) => res.json())
             .then((json) => {
                 console.log(json);
                 this.componentDidMount();
@@ -26,7 +26,7 @@ class Coin extends React.Component {
     searchCoin = () => {
 
         var coinId = this.state.searchCoin;
-        fetch(Url.URL_REST + "api/coin/getMaketCap/" + coinId)
+        fetch(Util.URL_REST + "api/coin/getMaketCap/" + coinId)
             .then((res) => res.json())
             .then((json) => {
                 var arr = new Array(json);
@@ -48,7 +48,7 @@ class Coin extends React.Component {
                 "Accept-Language": "application/json",
                 "Authorization": AuthStr
             }
-            fetch(Url.URL_REST + "api/coin/getAllCoin", {
+            fetch(Util.URL_REST + "api/coin/getAllCoin", {
                 method: "GET",
                 headers: headersList
             }).then((res) => res.json())

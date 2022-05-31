@@ -1,5 +1,5 @@
 import React from "react";
-import Url from '../components/Url';
+import Util from '../components/Util';
 
 export default class Login extends React.Component{
 
@@ -32,7 +32,7 @@ export default class Login extends React.Component{
         redirect: 'follow'
         };
 
-        fetch(Url.URL_REST+"api/authenticate", requestOptions)
+        fetch(Util.URL_REST+"api/authenticate", requestOptions)
         .then(response =>{
             console.log('response la' + response);
             if(response.ok){
@@ -43,7 +43,7 @@ export default class Login extends React.Component{
         .then(result => {console.log(result)
             localStorage.setItem("token" , result.jwt);
             localStorage.setItem("userDetail" , JSON.stringify(result.userDetail));
-            window.location.href = Url.URL;
+            window.location.href = Util.URL;
         })
         .catch(error => {console.log('error', error)
         alert("userName or Password are wrong ")

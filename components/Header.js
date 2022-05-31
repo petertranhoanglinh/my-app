@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom'
-import Url from "./Url";
+import Util from "./Util";
 export default class Header extends React.Component{
  
     constructor(props){
@@ -34,22 +34,22 @@ export default class Header extends React.Component{
         localStorage.removeItem("userItem");
         localStorage.removeItem("photo");
         localStorage.removeItem("userDetail");
-        window.location.href = Url.URL + "login";
+        window.location.href = Util.URL + "login";
        }
     }
     componentDidMount() {
-        fetch(Url.URL_REST + "api/getUserDetail", {
+        fetch(Util.URL_REST + "api/getUserDetail", {
             method: "GET",
-            headers: Url.headersList
+            headers: Util.headersList
         }).then((res) => res.json())
             .then((json) => {
-                if(Url.userDetail.role === 'ADMIN'){
+                if(Util.userDetail.role === 'ADMIN'){
                   this.setState({
                     showHide:true
                   })
                 }
                 this.setState({
-                  image: Url.URL_REST + json.photo,
+                  image: Util.URL_REST + json.photo,
                   text:json.userName
                 });
         })

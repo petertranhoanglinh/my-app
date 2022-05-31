@@ -1,5 +1,5 @@
 import React from "react";
-import Url from "./Url";
+import Util from "./Util";
 class Balance extends React.Component {
   // Constructor
   constructor(props) {
@@ -35,12 +35,12 @@ class Balance extends React.Component {
 
       var requestOptions = {
         method: "POST",
-        headers: Url.headersList,
+        headers: Util.headersList,
         body: raw,
         redirect: "follow",
       };
 
-      fetch(Url.URL_REST + "api/account/withdraw", requestOptions)
+      fetch(Util.URL_REST + "api/account/withdraw", requestOptions)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -62,9 +62,9 @@ class Balance extends React.Component {
   // ComponentDidMount is used to
   // execute the code
   componentDidMount() {
-    fetch(Url.URL_REST + "api/account/balance/*", {
+    fetch(Util.URL_REST + "api/account/balance/*", {
       method: "GET",
-      headers: Url.headersList,
+      headers: Util.headersList,
     })
       .then((res) => res.json())
       .then((json) => {
@@ -83,9 +83,9 @@ class Balance extends React.Component {
     if (this.state.searchAccount === "") {
       this.componentDidMount();
     } else {
-      fetch(Url.URL_REST + "api/account/balance/" + this.state.searchAccount, {
+      fetch(Util.URL_REST + "api/account/balance/" + this.state.searchAccount, {
         method: "GET",
-        headers: Url.headersList,
+        headers: Util.headersList,
       })
         .then((res) => res.json())
         .then((json) => {
@@ -106,12 +106,12 @@ class Balance extends React.Component {
 
     var requestOptions = {
       method: "POST",
-      headers: Url.headersList,
+      headers: Util.headersList,
       body: raw,
       redirect: "follow",
     };
 
-    fetch(Url.URL_REST + "api/account/add/" + coinId, requestOptions)
+    fetch(Util.URL_REST + "api/account/add/" + coinId, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);

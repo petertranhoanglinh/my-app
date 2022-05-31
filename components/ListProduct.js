@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
 import { Link } from 'react-router-dom'
-import Url from "./Url"
+import Util from "./Util"
 class ListProduct extends React.Component {
 
     // Constructor
@@ -28,9 +28,9 @@ class ListProduct extends React.Component {
             kind = "*";
         }
         
-        fetch(Url.URL_REST+"api/product/getProduct/" + pdtName +"/" + kind, {
+        fetch(Util.URL_REST+"api/product/getProduct/" + pdtName +"/" + kind, {
             method: "GET",
-            headers: Url.headersList
+            headers: Util.headersList
         }).then((res) => res.json())
             .then((json) => {
                 this.setState({
@@ -44,9 +44,9 @@ class ListProduct extends React.Component {
         this.setState({ [event.target.name]: event.target.value.trim() });
     }
     componentDidMount() {
-        fetch(Url.URL_REST+"api/product/getProduct/*/*", {
+        fetch(Util.URL_REST+"api/product/getProduct/*/*", {
             method: "GET",
-            headers: Url.headersList
+            headers: Util.headersList
         }).then((res) => res.json())
             .then((json) => {
                 this.setState({
@@ -54,9 +54,9 @@ class ListProduct extends React.Component {
                     DataisLoaded: true
                 });
             })
-        fetch(Url.URL_REST+"api/product/getPdtKind", {
+        fetch(Util.URL_REST+"api/product/getPdtKind", {
                 method: "GET",
-                headers: Url.headersList
+                headers: Util.headersList
             }).then((res) => res.json())
                 .then((json) => {
                     this.setState({
@@ -91,8 +91,8 @@ class ListProduct extends React.Component {
                                     product =>
                                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style={{ width: "40 px", padding: "20px" }}>
                                             <div className="thumbnail">
-                                                <img src={Url.URL_REST + product.image}
-                                                    alt="image" style={{ width: "80px", height: "100px" }} onClick={() => this.openImg(Url.URL_REST + product.image)} />
+                                                <img src={Util.URL_REST + product.image}
+                                                    alt="image" style={{ width: "80px", height: "100px" }} onClick={() => this.openImg(Util.URL_REST + product.image)} />
                                                 <div style={{ width: "110px", height: "110px" , textAlign: 'center'}}>
                                                     <h6>{product.pdtName}</h6>
                                                     <p>

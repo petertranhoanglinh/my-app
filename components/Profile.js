@@ -1,5 +1,5 @@
 import React from "react";
-import Url from "./Url"
+import Util from "./Util"
 
 const token = localStorage.getItem('token');
 const AuthStr = 'Bearer ' + token;
@@ -30,7 +30,7 @@ class Profile extends React.Component {
     this.setState({ [event.target.name]: event.target.value.trim() });
   }
   openImg = () => {
-    window.location.href = Url.URL_REST + this.state.imageFileNameOld;
+    window.location.href = Util.URL_REST + this.state.imageFileNameOld;
   }
   upLoad = () => {
     let headersList = {
@@ -48,7 +48,7 @@ class Profile extends React.Component {
     //   imgData:formData
     // });
 
-    fetch(Url.URL_REST + "api/user/upload", {
+    fetch(Util.URL_REST + "api/user/upload", {
       method: "POST",
       body: formData,
       headers: headersList
@@ -57,7 +57,7 @@ class Profile extends React.Component {
     }).then(function (data) {
       alert(data.returnMessage);
       console.log(data);
-      window.location.href = Url.URL + "profile";
+      window.location.href = Util.URL + "profile";
     })
 
   }
@@ -67,7 +67,7 @@ class Profile extends React.Component {
       "Accept-Language": "application/json",
       "Authorization": AuthStr
     }
-    fetch(Url.URL_REST + "api/getUserDetail", {
+    fetch(Util.URL_REST + "api/getUserDetail", {
       method: "GET",
       headers: headersList
     }).then((res) => res.json())
@@ -76,7 +76,7 @@ class Profile extends React.Component {
         this.setState({
           user: json,
           DataisLoaded: true,
-          photo: Url.URL_REST + json.photo,
+          photo: Util.URL_REST + json.photo,
           imageFileNameOld: json.photo
         });
       })

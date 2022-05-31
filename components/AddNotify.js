@@ -1,5 +1,5 @@
 import React from "react";
-import Url from "./Url"
+import Util from "./Util"
 
 const token = localStorage.getItem('token');
 const AuthStr = 'Bearer '+token;
@@ -54,7 +54,7 @@ class AddNotify extends React.Component {
             //   imgData:formData
             // });
 
-            fetch(Url.URL_REST+"api/notify/save", { 
+            fetch(Util.URL_REST+"api/notify/save", { 
               method: "POST",
               body: formData,
               headers: headersList
@@ -63,7 +63,7 @@ class AddNotify extends React.Component {
             }).then(function(data) {
               alert(data.returnMessage);
               console.log(data);
-              window.location.href = Url.url+"notify";
+              window.location.href = Util.url+"notify";
             })
     
   }
@@ -73,7 +73,7 @@ class AddNotify extends React.Component {
                 "Accept-Language": "application/json",
                 "Authorization" : AuthStr
                } 
-            fetch(Url.URL_REST+"api/getUserDetail", { 
+            fetch(Util.URL_REST+"api/getUserDetail", { 
                  method: "GET", 
                  headers: headersList
              }).then((res) => res.json())

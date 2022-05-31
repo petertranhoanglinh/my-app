@@ -1,15 +1,15 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
-import Url from "./Url"
+import Util from "./Util"
 const ProductDetail = () =>{
     const {pdtId} = useParams();
     const [state, setValue] = useState({pdtID:pdtId, product:{}, description:""});
    // setValue({pdtID: pdtId});
    useEffect(() => {
     const fetchData = async () => {
-    await fetch(Url.URL_REST+"api/product/getPdt/"+pdtId, {
+    await fetch(Util.URL_REST+"api/product/getPdt/"+pdtId, {
         method: "GET",
-        headers: Url.headersList
+        headers: Util.headersList
         }).then((res) => res.json())
         .then((json) => {
             setValue({
@@ -39,15 +39,15 @@ const ProductDetail = () =>{
                     <div className="carousel-inner">
                       {/* Slide 1 */}
                       <div className="item active">
-                        <img src={Url.URL_REST+state.product.image} className="img-responsive" alt="" />
+                        <img src={Util.URL_REST+state.product.image} className="img-responsive" alt="" />
                       </div>
                       {/* Slide 2 */}
                       <div className="item">
-                        <img src={Url.URL_REST+state.product.image1} className="img-responsive" alt="" />
+                        <img src={Util.URL_REST+state.product.image1} className="img-responsive" alt="" />
                       </div>
                       {/* Slide 3 */}
                       <div className="item">
-                        <img src={Url.URL_REST+state.product.image2} className="img-responsive" alt="" />
+                        <img src={Util.URL_REST+state.product.image2} className="img-responsive" alt="" />
                       </div>
                     </div>
                     <a className="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span className="glyphicon glyphicon-chevron-left" /> </a>

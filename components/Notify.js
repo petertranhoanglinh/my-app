@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
-import Url from "./Url"
+import Util from "./Util"
 
 
 class Notify extends React.Component {
@@ -19,9 +19,9 @@ class Notify extends React.Component {
     }
     delete = (id) =>{
         if (window.confirm('Do you want to delete this notification?')){
-            fetch(Url.URL_REST+"api/notify/delete/"+id, {
+            fetch(Util.URL_REST+"api/notify/delete/"+id, {
                 method: "PUT",
-                headers: Url.headersList
+                headers: Util.headersList
             }).then((res) => res.json())
                 .then((json) => {
                     alert(json.returnMessage);
@@ -37,14 +37,14 @@ class Notify extends React.Component {
     }
     
     componentDidMount() {
-        if(Url.userDetail.role === 'ADMIN'){
+        if(Util.userDetail.role === 'ADMIN'){
             this.setState({
                 showResults : true
             });
         }
-        fetch(Url.URL_REST+"api/notify/getAll", {
+        fetch(Util.URL_REST+"api/notify/getAll", {
             method: "GET",
-            headers: Url.headersList
+            headers: Util.headersList
         }).then((res) => res.json())
             .then((json) => {
                 console.log(json);
@@ -79,8 +79,8 @@ class Notify extends React.Component {
                                             <td className="text-td-cl">{notify.title}</td>
                                             <td className="text-td-cl">{notify.note}</td>
                                             <td className="text-td-cl">{notify.evenDate}</td>
-                                            <td className="text-td-cl" onClick={() => this.openImg(Url.URL_REST + notify.image)}>
-                                                <img src={Url.URL_REST + notify.image} className="img-responsive" alt="Image" style={{ width: '70px', textAlign: 'center' }} /></td>
+                                            <td className="text-td-cl" onClick={() => this.openImg(Util.URL_REST + notify.image)}>
+                                                <img src={Util.URL_REST + notify.image} className="img-responsive" alt="Image" style={{ width: '70px', textAlign: 'center' }} /></td>
                                             {showResults ? <td>
                                                 <button onClick={() => this.delete(notify.id)} type="button" class="btn btn-default" aria-label="Left Align">
                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

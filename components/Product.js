@@ -1,7 +1,7 @@
 import React from "react";
 import HeaderProduct from "./HeaderProduct";
 import ListProduct from "./ListProduct"
-import Url from "./Url";
+import Util from "./Util";
 const token = localStorage.getItem('token');
 
 const AuthStr = 'Bearer ' + token;
@@ -18,7 +18,7 @@ class Product extends React.Component {
             "Accept-Language": "application/json",
             "Authorization": AuthStr
         }
-        fetch(Url.URL_REST + "api/getUserDetail", {
+        fetch(Util.URL_REST + "api/getUserDetail", {
             method: "GET",
             headers: headersList
         }).then((res) => res.json())
