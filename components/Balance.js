@@ -1,6 +1,5 @@
 import React from "react";
 import Url from "./Url";
-
 class Balance extends React.Component {
     // Constructor
     constructor(props) {

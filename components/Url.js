@@ -4,9 +4,9 @@ const token = localStorage.getItem('token');
 const AuthStr = 'Bearer '+token;
 const userDetail = JSON.parse(localStorage.getItem('userDetail'));
 let headersList = {
-    "User-Agent": "Thunder Client (https://www.thunderclient.com)",
     "Accept-Language": "application/json",
-    "Authorization": AuthStr
+    "Authorization": AuthStr,
+    "Content-Type": "application/json"
 }
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {URL,
