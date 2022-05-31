@@ -10,7 +10,7 @@ class Balance extends React.Component {
       quantitySend: 0,
       contract: "",
       addCoin: "",
-      searchCoin: "",
+      searchAccount: "",
       showHideButton: true,
     };
   }
@@ -79,11 +79,11 @@ class Balance extends React.Component {
   setPram = (event) => {
     this.setState({ [event.target.name]: event.target.value.trim() });
   };
-  searchCoin = () => {
-    if (this.state.searchCoin === "") {
+  searchAccount = () => {
+    if (this.state.searchAccount === "") {
       this.componentDidMount();
     } else {
-      fetch(Url.URL_REST + "api/account/balance/" + this.state.searchCoin, {
+      fetch(Url.URL_REST + "api/account/balance/" + this.state.searchAccount, {
         method: "GET",
         headers: Url.headersList,
       })
@@ -141,15 +141,15 @@ class Balance extends React.Component {
         <div>
           <input
             type="text"
-            name="searchCoin"
+            name="searchAccount"
             onChange={this.setPram}
-            placeholder="Search Balace"
+            placeholder="Enter Account Id"
           />
           <button
             type="button"
             class="btn btn-default"
             aria-label="Left Align"
-            onClick={this.searchCoin}
+            onClick={this.searchAccount}
           >
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
           </button>
@@ -189,16 +189,6 @@ class Balance extends React.Component {
                       <input
                         type="number"
                         name="quantitySend"
-                        class="form-control"
-                        onChange={this.handleClick}
-                      />
-                    </td>
-                  ) : null}
-                  {this.state.showHideButton ? (
-                    <td className="text-td-cl">
-                      <input
-                        type="text"
-                        name="contract"
                         class="form-control"
                         onChange={this.handleClick}
                       />
