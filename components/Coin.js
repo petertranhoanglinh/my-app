@@ -94,7 +94,7 @@ class Coin extends React.Component {
                     <input type='text' name='searchCoin' onChange={this.setPram} placeholder='Search coinId' />
                     <button onClick={this.searchCoin}>search</button>
 
-                    <table className="table table-hover">
+                    <table className="table table-hover" style={{height:"720px"}}>
                         <thead>
                             <tr>
                                 <th className="text-th-cl">CoinId</th>

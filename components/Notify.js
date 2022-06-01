@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
 import Util from "./Util"
-
+import Pagination from "react-js-pagination";
 
 class Notify extends React.Component {
 
@@ -11,7 +11,8 @@ class Notify extends React.Component {
         this.state = {
             notifys: [],
             DataisLoaded: false,
-            showResults: false
+            showResults: false,
+            pageNumber:1
         };
     }
     openImg = (src) => {
@@ -35,6 +36,24 @@ class Notify extends React.Component {
     setPram = (event) => {
         this.setState({ [event.target.name]: event.target.value.trim() });
     }
+    handlePageChange(pageNumber) {
+        console.log(`active page is ${pageNumber}`);
+        //  alert(this.state.activePage);
+        this.setState({ activePage: pageNumber });
+
+        fetch(Util.URL_REST + "api/notify/getAll/"+pageNumber, {
+            method: "GET",
+            headers: Util.headersList
+        }).then((res) => res.json())
+            .then((json) => {
+                console.log(json);
+                this.setState({
+                    notifys: json,
+                    DataisLoaded: true
+                });
+            })
+
+    }
     
     componentDidMount() {
         if(Util.userDetail.role === 'ADMIN'){
@@ -42,7 +61,7 @@ class Notify extends React.Component {
                 showResults : true
             });
         }
-        fetch(Util.URL_REST+"api/notify/getAll", {
+        fetch(Util.URL_REST+"api/notify/getAll/1", {
             method: "GET",
             headers: Util.headersList
         }).then((res) => res.json())
@@ -62,7 +81,7 @@ class Notify extends React.Component {
         else
             return (
                 <div>
-                    <table className="table table-hover">
+                    <table className="table table-hover" style={{height:"720px"}}>
                         <thead>
                             <tr>
                                 <th className="text-th-cl">Title</th>
@@ -91,6 +110,12 @@ class Notify extends React.Component {
                             }
                         </tbody>
                     </table>
+                    <Pagination
+                          activePage={this.state.activePage}
+                          itemsCountPerPage={10}
+                          totalItemsCount={500}
+                          onChange={this.handlePageChange.bind(this)}
+                        />
                 </div>
             );
     }

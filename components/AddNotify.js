@@ -63,7 +63,7 @@ class AddNotify extends React.Component {
             }).then(function(data) {
               alert(data.returnMessage);
               console.log(data);
-              window.location.href = Util.url+"notify";
+              window.location.href = Util.URL+"notify";
             })
     
   }

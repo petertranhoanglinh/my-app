@@ -121,6 +121,8 @@ const ProductDetail = () =>{
                       </dl>
                     </div>
                     <div className="tab-pane fade" id="reviews">
+                    
+
                       <br />
                         <textarea rows={2} className="form-control" placeholder="Write a review" defaultValue={""} 
                          onChange={(ev) => setValue({...state, comment: ev.target.value})}/>
@@ -150,6 +152,7 @@ const ProductDetail = () =>{
                           {
                             state1.rewiew.map(
                               wiew =>
+                         
                             <div className="comment mt-4 text-justify float-left" style={{paddingTop:"20px"}}>
                               <img src={Util.URL_REST+wiew.image} alt="" className="rounded-circle" width={40} height={40} /> {" "}{wiew.createBy}
                               <br />
@@ -157,21 +160,20 @@ const ProductDetail = () =>{
                               <span style={{fontSize:"10px"}}>{wiew.createDate}</span>
                               <br />
                             </div>
+                          
                             )
                            
                           }
-                          
-                        
-                       
-                      
-                       <Pagination
+                           <Pagination
                           activePage={state1.activePage}
                           itemsCountPerPage={5}
                           totalItemsCount={500}
                           onChange={handlePageChange}
                         />
                     </div>
+                   
                   </div>
+                 
                 </div>
                 <hr />
                 <div className="row">
