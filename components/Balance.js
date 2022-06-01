@@ -1,5 +1,7 @@
 import React from "react";
 import Util from "./Util";
+import Pagination from "react-js-pagination";
+
 class Balance extends React.Component {
   // Constructor
   constructor(props) {
@@ -12,6 +14,7 @@ class Balance extends React.Component {
       addCoin: "",
       searchAccount: "",
       showHideButton: true,
+      activePage:1
     };
   }
   handleClick = (event) => {
@@ -61,8 +64,15 @@ class Balance extends React.Component {
   };
   // ComponentDidMount is used to
   // execute the code
-  componentDidMount() {
-    fetch(Util.URL_REST + "api/account/balance/*", {
+  componentDidMount(pageNumber) {
+    var page;
+    if(pageNumber === null || pageNumber === undefined){
+      page = 1
+    }
+    else{
+      page = pageNumber
+    }
+    fetch(Util.URL_REST + "api/account/balance/*/"+page, {
       method: "GET",
       headers: Util.headersList,
     })
@@ -83,7 +93,7 @@ class Balance extends React.Component {
     if (this.state.searchAccount === "") {
       this.componentDidMount();
     } else {
-      fetch(Util.URL_REST + "api/account/balance/" + this.state.searchAccount, {
+      fetch(Util.URL_REST + "api/account/balance/" + this.state.searchAccount+"/"+1, {
         method: "GET",
         headers: Util.headersList,
       })
@@ -127,6 +137,26 @@ class Balance extends React.Component {
         console.log("error", error);
       });
   };
+  handlePageChange(pageNumber) {
+    this.setState({ activePage: pageNumber });
+    if(this.state.searchAccount === ""){
+      this.componentDidMount(pageNumber); 
+    }else{
+      fetch(Util.URL_REST + "api/account/balance/" + this.state.searchAccount+"/"+pageNumber, {
+        method: "GET",
+        headers: Util.headersList,
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json);
+          this.setState({
+            balances: json,
+            DataisLoaded: true,
+            showHideButton: false,
+          });
+        });
+    }
+}
 
   render() {
     const { DataisLoaded, balances } = this.state;
@@ -153,7 +183,23 @@ class Balance extends React.Component {
           >
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
           </button>
-          <table className="table table-hover">
+          <br></br>
+          <input
+            type="text"
+            name="addCoin"
+            onChange={this.setPram}
+            placeholder="add Balance"
+          />
+          
+          <button
+            onClick={this.addCoin}
+            type="button"
+            class="btn btn-default"
+            aria-label="Left Align"
+          >
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          </button>
+          <table className="table table-hover" style={{height:"650px"}}>
             <thead>
               <tr>
                 <th className="text-th-cl">AccountId</th>
@@ -225,20 +271,12 @@ class Balance extends React.Component {
               ))}
             </tbody>
           </table>
-          <input
-            type="text"
-            name="addCoin"
-            onChange={this.setPram}
-            placeholder="add Balance"
-          />
-          <button
-            onClick={this.addCoin}
-            type="button"
-            class="btn btn-default"
-            aria-label="Left Align"
-          >
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-          </button>
+          <Pagination
+                        activePage={this.state.activePage}
+                        itemsCountPerPage={10}
+                        totalItemsCount={4500}
+                        onChange={this.handlePageChange.bind(this)}
+                    />
         </div>
       );
   }
