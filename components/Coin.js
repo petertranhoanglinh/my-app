@@ -1,8 +1,6 @@
 import React from "react";
 import Util from "./Util";
 import Pagination from "react-js-pagination";
-const token = localStorage.getItem('token');
-const AuthStr = 'Bearer ' + token;
 class Coin extends React.Component {
 
     // Constructor

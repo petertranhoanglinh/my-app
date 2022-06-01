@@ -1,11 +1,23 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import Util from "./Util"
+import Pagination from "react-js-pagination";
+
 const ProductDetail = () =>{
+    
     const {pdtId} = useParams();
-    const [state, setValue] = useState({pdtID:pdtId, product:{}, description:""});
+    const [state, setValue] = useState({pdtID:pdtId
+      , product:{}
+      , description:""
+      , comment : ""
+      , rate : 1}
+      );
+    const [state1, setData] =useState({activePage:1 ,rewiew: []});
+   
    // setValue({pdtID: pdtId});
    useEffect(() => {
+    
     const fetchData = async () => {
     await fetch(Util.URL_REST+"api/product/getPdt/"+pdtId, {
         method: "GET",
@@ -14,13 +26,36 @@ const ProductDetail = () =>{
         .then((json) => {
             setValue({
                 product: json,
-                description: json.description
+                description: json.description,
             });
     })
     };
     fetchData();
   }, [pdtId]);
-
+  const handlePageChange = (activePage) => {
+     fetch(Util.URL_REST+"api/rewiew/getRewiew/"+pdtId+"/" + activePage, {
+      method: "GET",
+      headers: Util.headersList
+      }).then((res) => res.json())
+      .then((json) => {
+          setData({
+               activePage:activePage,
+               rewiew: json
+          });
+  })  
+  }
+  const getAll = () => {
+    fetch(Util.URL_REST+"api/rewiew/getRewiew/"+pdtId+"/" + 1, {
+     method: "GET",
+     headers: Util.headersList
+     }).then((res) => res.json())
+     .then((json) => {
+         setData({
+              activePage:1,
+              rewiew: json
+         });
+ })  
+ }
     return (
         <div>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -68,7 +103,7 @@ const ProductDetail = () =>{
                   <ul id="myTab" className="nav nav-pills">
                     <li className="active"><a href="#more-information" data-toggle="tab" className="no-margin">Product Description </a></li>
                     <li className><a href="#specifications" data-toggle="tab">Specifications</a></li>
-                    <li className><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                    <li className><a href="#reviews" data-toggle="tab" onClick={getAll}>Reviews</a></li>
                   </ul>
                   <div id="myTabContent" className="tab-content">
                     <div className="tab-pane fade active in" id="more-information">
@@ -87,85 +122,61 @@ const ProductDetail = () =>{
                     </div>
                     <div className="tab-pane fade" id="reviews">
                       <br />
-                      <form method="post" className="well padding-bottom-10" onsubmit="return false;">
-                        <textarea rows={2} className="form-control" placeholder="Write a review" defaultValue={""} />
-                        <div className="margin-top-10">
-                          <button type="submit" className="btn btn-sm btn-primary pull-right">
+                        <textarea rows={2} className="form-control" placeholder="Write a review" defaultValue={""} 
+                         onChange={(ev) => setValue({...state, comment: ev.target.value})}/>
+                         
+                         <div class="form-group">
+                           <label for="input" class="col-sm-2 control-label">Rate Product</label>
+                           <div class="col-sm-3">
+                             <select name="" id="input" class="form-control" required="required"
+                              onChange={(ev) => setValue({...state, rate: ev.target.value})}>
+                               <option value="1">Bad</option>
+                               <option value="2">Medium</option>
+                               <option value="3">Good</option>
+                               <option value="4">Pretty Good</option>
+                               <option value="5">Wonderful</option>
+                             </select>
+                           </div>
+                         </div>
+                         
+                        
+                        <div>
+                          <button type="submit" className="btn btn-sm btn-primary pull-right" onClick={() => addRewiew(state.product.pdtId,state.rate,state.comment)}>
                             Submit Review
                           </button>
-                          <a href="javascript:void(0);" className="btn btn-link profile-link-btn" rel="tooltip" data-placement="bottom" title data-original-title="Add Location"><i className="fa fa-location-arrow" /></a>
-                          <a href="javascript:void(0);" className="btn btn-link profile-link-btn" rel="tooltip" data-placement="bottom" title data-original-title="Add Voice"><i className="fa fa-microphone" /></a>
-                          <a href="javascript:void(0);" className="btn btn-link profile-link-btn" rel="tooltip" data-placement="bottom" title data-original-title="Add Photo"><i className="fa fa-camera" /></a>
-                          <a href="javascript:void(0);" className="btn btn-link profile-link-btn" rel="tooltip" data-placement="bottom" title data-original-title="Add File"><i className="fa fa-file" /></a>
                         </div>
-                      </form>
-                      <div className="chat-body no-padding profile-message">
-                        <ul>
-                          <li className="message">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" className="online" />
-                            <span className="message-text">
-                              <a href="javascript:void(0);" className="username">
-                                Alisha Molly
-                                <span className="badge">Purchase Verified</span>
-                                <span className="pull-right">
-                                  <i className="fa fa-star fa-2x text-primary" />
-                                  <i className="fa fa-star fa-2x text-primary" />
-                                  <i className="fa fa-star fa-2x text-primary" />
-                                  <i className="fa fa-star fa-2x text-primary" />
-                                  <i className="fa fa-star fa-2x text-muted" />
-                                </span>
-                              </a>
-                              Can't divide were divide fish forth fish to. Was can't form the, living life grass darkness very image let unto fowl isn't in blessed fill life yielding above all moved
-                            </span>
-                            <ul className="list-inline font-xs">
-                              <li>
-                                <a href="javascript:void(0);" className="text-info"><i className="fa fa-thumbs-up" /> This was helpful (22)</a>
-                              </li>
-                              <li className="pull-right">
-                                <small className="text-muted pull-right ultra-light"> Posted 1 year ago </small>
-                              </li>
-                            </ul>
-                          </li>
-                          <li className="message">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" className="online" />
-                            <span className="message-text">
-                              <a href="javascript:void(0);" className="username">
-                                Aragon Zarko
-                                <span className="badge">Purchase Verified</span>
-                                <span className="pull-right">
-                                  <i className="fa fa-star fa-2x text-primary" />
-                                  <i className="fa fa-star fa-2x text-primary" />
-                                  <i className="fa fa-star fa-2x text-primary" />
-                                  <i className="fa fa-star fa-2x text-primary" />
-                                  <i className="fa fa-star fa-2x text-primary" />
-                                </span>
-                              </a>
-                              Excellent product, love it!
-                            </span>
-                            <ul className="list-inline font-xs">
-                              <li>
-                                <a href="javascript:void(0);" className="text-info"><i className="fa fa-thumbs-up" /> This was helpful (22)</a>
-                              </li>
-                              <li className="pull-right">
-                                <small className="text-muted pull-right ultra-light"> Posted 1 year ago </small>
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
+                        <br/>
+                       
+                          {
+                            state1.rewiew.map(
+                              wiew =>
+                            <div className="comment mt-4 text-justify float-left" style={{paddingTop:"20px"}}>
+                              <img src={Util.URL_REST+wiew.image} alt="" className="rounded-circle" width={40} height={40} /> {" "}{wiew.createBy}
+                              <br />
+                              <p>{wiew.comment}</p>
+                              <span style={{fontSize:"10px"}}>{wiew.createDate}</span>
+                              <br />
+                            </div>
+                            )
+                           
+                          }
+                          
+                        
+                       
+                      
+                       <Pagination
+                          activePage={state1.activePage}
+                          itemsCountPerPage={5}
+                          totalItemsCount={500}
+                          onChange={handlePageChange}
+                        />
                     </div>
                   </div>
                 </div>
                 <hr />
                 <div className="row">
                   <div className="col-sm-12 col-md-6 col-lg-6">
-                    <a href="javascript:void(0);" className="btn btn-success btn-lg">Add to cart {state.product.price} {state.product.kindCoin}</a>
-                  </div>
-                  <div className="col-sm-12 col-md-6 col-lg-6">
-                    <div className="btn-group pull-right">
-                      <button className="btn btn-white btn-default"><i className="fa fa-star" /> Add to wishlist</button>
-                      <button className="btn btn-white btn-default"><i className="fa fa-envelope" /> Contact Seller</button>
-                    </div>
+                    <button className="btn btn-success btn-lg">Add to cart {state.product.price} {state.product.kindCoin}</button>
                   </div>
                 </div>
               </div>
@@ -177,4 +188,30 @@ const ProductDetail = () =>{
 
     );
 }
+function addRewiew(pdtId,rate,comment){
+  if(comment === ""){
+    alert("Please press comment");
+    return false;
+  }else{
+    var raw = JSON.stringify({
+      pdtId: pdtId,
+      rate: rate,
+      comment: comment,
+    });
+    var requestOptions = {
+      method: "POST",
+      headers: Util.headersList,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch(Util.URL_REST + "api/rewiew/add", requestOptions)
+    .then((response) => {
+      if (response.ok) {
+        alert("suscess");
+      }
+    })
+  }
+}
+
+
 export default ProductDetail
