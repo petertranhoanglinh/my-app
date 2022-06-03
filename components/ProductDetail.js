@@ -108,9 +108,17 @@ const ProductDetail = () =>{
                   <div id="myTabContent" className="tab-content">
                     <div className="tab-pane fade active in" id="more-information">
                       <br />
-                      <strong>Description Title</strong>
+                      <strong>Description</strong>
                       <p>
                          {state.description}
+                      </p>
+                      <strong>Seller</strong>
+                      <p>
+                         {state.product.createBy}
+                      </p>
+                      <strong>Rank</strong>
+                      <p>
+                         {state.product.rank}
                       </p>
                     </div>
                     <div className="tab-pane fade" id="specifications">
