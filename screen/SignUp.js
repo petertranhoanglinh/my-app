@@ -62,7 +62,7 @@ export default class SignUp extends React.Component {
         console.log('error', error)
         alert("userId has used");
       });
-    window.location.reload(false);
+   // window.location.reload(false);
   }
   render() {
     return (
