@@ -1,23 +1,30 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import React from "react";
 import Util from "./Util"
-
 const userDetail = JSON.parse(localStorage.getItem('userDetail'));
 class AddProduct extends React.Component {
 
 	// Constructor
 	constructor(props) {
 		super(props);
-        console.log(this.props.routeParams)
-		this.state = {
-      imageData:'',
-      imageData1:'',
-      imageData2:'',
-      photo:'',
-      photo1:'',
-      photo2:'',
-			DataisLoaded: false,
-		};
+    
+      this.state = {
+        pdtId:null,
+        pdtKind:'',
+        note:'',
+        description:'',
+        
+        imageData:'',
+        imageData1:'',
+        imageData2:'',
+        photo:'',
+        photo1:'',
+        photo2:'',
+        DataisLoaded: false,
+      };
+    
+
+	
     //console.log(this.props.params.testValue);
     this.onImageChange = this.onImageChange.bind(this)
     this.setPram = this.setPram.bind(this) ;
@@ -46,6 +53,9 @@ class AddProduct extends React.Component {
       });
     }
   };
+  changeDateToString = event =>{
+    alert(event.target.value.trim())
+  }
   setPram=(event)=>{
         this.setState({[event.target.name] : event.target.value.trim()});
     }
@@ -79,6 +89,12 @@ class AddProduct extends React.Component {
     
   }
 	componentDidMount() {
+    var pdtId = window.location.href.replace(Util.URL+"addProduct","")
+    if(pdtId !== ""){
+      this.setState({
+        pdtId:pdtId.replace("/","")
+      })
+    }
             fetch(Util.URL_REST+"api/getUserDetail", { 
                  method: "GET", 
                  headers: Util.headersList
@@ -91,6 +107,7 @@ class AddProduct extends React.Component {
                })
    }	
 	render() {
+    
 		const { DataisLoaded} = this.state;
 		if (!DataisLoaded) return <div>
 			<h6 className="text-title-cl"> Plesea login.... </h6> </div> ;
@@ -103,43 +120,44 @@ class AddProduct extends React.Component {
               <div className="form-group">
                 <label className="col-sm-3 control-label">Product ID</label>
                 <div className="col-sm-9">
-                  <input type="text" id="firstName" placeholder="ProductID" className="form-control" autofocus />
+                  <input type="text" value = {this.state.pdtId} placeholder="ProductID" className="form-control" autofocus disabled/>
                 </div>
               </div>
               <div className="form-group">
                 <label  className="col-sm-3 control-label">Product Name</label>
                 <div className="col-sm-9">
-                  <input type="text" id="lastName" placeholder="Product Name" className="form-control" autofocus />
+                  <input type="text"  placeholder="Product Name" className="form-control" name = "pdtName" />
                 </div>
               </div>
               <div className="form-group">
                 <label  className="col-sm-3 control-label">Pdt Kind</label>
                 <div className="col-sm-9">
-                  <input type="email" id="email" placeholder="Pdt Kind" className="form-control"  />
+                  <input type="text" placeholder="Pdt Kind" className="form-control" name ="pdtKind"  />
                 </div>
               </div>
               <div className="form-group">
                 <label className="col-sm-3 control-label">Description</label>
                 <div className="col-sm-9">
-                <textarea rows={2} className="form-control" placeholder="Write a Description"/>                
+                <textarea rows={2} className="form-control" placeholder="Write a Description" name= "description"/>                
                 </div>
               </div>
               <div className="form-group">
                 <label className="col-sm-3 control-label">Note</label>
                 <div className="col-sm-9">
-                <textarea rows={2} className="form-control" placeholder="Write a Note"/>                
+                <textarea rows={2} className="form-control" placeholder="Write a Note" name = "note"/>                
                 </div>
               </div>
               <div className="form-group">
                 <label htmlFor="birthDate" className="col-sm-3 control-label">Start Sale</label>
                 <div className="col-sm-9">
-                  <input type="date" id="birthDate" className="form-control"/>
+                  <input type="date" id="birthDate" className="form-control" name = "startSale"
+                   onChange={this.changeDateToString}/>
                 </div>
               </div>
               <div className="form-group">
                 <label htmlFor="birthDate" className="col-sm-3 control-label">End Sale</label>
                 <div className="col-sm-9">
-                  <input type="date" id="birthDate" className="form-control"/>
+                  <input type="date" id="birthDate" className="form-control" name = "endSale" onChange={this.changeDateToString}/>
                 </div>
               </div>
               <div className="form-group">
