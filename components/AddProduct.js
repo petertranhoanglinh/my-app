@@ -10,6 +10,12 @@ class AddProduct extends React.Component {
 		super(props);
         console.log(this.props.routeParams)
 		this.state = {
+      imageData:'',
+      imageData1:'',
+      imageData2:'',
+      photo:'',
+      photo1:'',
+      photo2:'',
 			DataisLoaded: false,
 		};
     //console.log(this.props.params.testValue);
@@ -21,6 +27,22 @@ class AddProduct extends React.Component {
       this.setState({
         photo: URL.createObjectURL(event.target.files[0]),
         imageData:event.target.files[0] 
+      });
+    }
+  };
+  onImageChange1 = event => {
+    if (event.target.files && event.target.files[0]) {
+      this.setState({
+        photo1: URL.createObjectURL(event.target.files[0]),
+        imageData1:event.target.files[0] 
+      });
+    }
+  };
+  onImageChange2 = event => {
+    if (event.target.files && event.target.files[0]) {
+      this.setState({
+        photo2: URL.createObjectURL(event.target.files[0]),
+        imageData2:event.target.files[0] 
       });
     }
   };
@@ -79,39 +101,33 @@ class AddProduct extends React.Component {
             <div className="container">
               <h2>Registration</h2>
               <div className="form-group">
-                <label className="col-sm-3 control-label">UserId</label>
+                <label className="col-sm-3 control-label">Product ID</label>
                 <div className="col-sm-9">
-                  <input type="text" id="firstName" placeholder="UserId" className="form-control" autofocus />
+                  <input type="text" id="firstName" placeholder="ProductID" className="form-control" autofocus />
                 </div>
               </div>
               <div className="form-group">
-                <label  className="col-sm-3 control-label">User Name</label>
+                <label  className="col-sm-3 control-label">Product Name</label>
                 <div className="col-sm-9">
-                  <input type="text" id="lastName" placeholder="User Name" className="form-control" autofocus />
+                  <input type="text" id="lastName" placeholder="Product Name" className="form-control" autofocus />
                 </div>
               </div>
               <div className="form-group">
-                <label  className="col-sm-3 control-label">Role</label>
+                <label  className="col-sm-3 control-label">Pdt Kind</label>
                 <div className="col-sm-9">
-                  <input type="email" id="email" placeholder="Email" className="form-control" name="Role" />
+                  <input type="email" id="email" placeholder="Pdt Kind" className="form-control"  />
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-3 control-label">Rank</label>
+                <label className="col-sm-3 control-label">Description</label>
                 <div className="col-sm-9">
-                  <input type="email" id="email" placeholder="Email" className="form-control" name="Rank" />
-                </div>
-              </div>
-              <div className="form-group">  
-                <label  className="col-sm-3 control-label">Password*</label>
-                <div className="col-sm-9">
-                  <input type="password" id="password" placeholder="Password" className="form-control" />
+                <textarea rows={2} className="form-control" placeholder="Write a Description"/>                
                 </div>
               </div>
               <div className="form-group">
-                <label  className="col-sm-3 control-label">Confirm Password*</label>
+                <label className="col-sm-3 control-label">Note</label>
                 <div className="col-sm-9">
-                  <input type="password" id="password" placeholder="Password" className="form-control" />
+                <textarea rows={2} className="form-control" placeholder="Write a Note"/>                
                 </div>
               </div>
               <div className="form-group">
@@ -125,6 +141,21 @@ class AddProduct extends React.Component {
                 <div className="col-sm-9">
                   <input type="date" id="birthDate" className="form-control"/>
                 </div>
+              </div>
+              <div className="form-group">
+              <label htmlFor="birthDate" className="col-sm-3 control-label">Image</label>
+                                    <img src = {this.state.photo} alt="" onChange={this.changeHandler} style = {{width:'150px',padding:"10px"}}/>
+                                        <input type="file" name="imageData" onChange={this.onImageChange} />
+              </div>
+              <div className="form-group">
+              <label htmlFor="birthDate" className="col-sm-3 control-label">Image1</label>
+                                    <img src = {this.state.photo1} alt="" onChange={this.changeHandler} style = {{width:'150px',padding:"10px"}}/>
+                                        <input type="file" name="imageData1" onChange={this.onImageChange1} />
+              </div>
+              <div className="form-group">
+              <label htmlFor="birthDate" className="col-sm-3 control-label">Image2</label>
+                                    <img src = {this.state.photo2} alt="" onChange={this.changeHandler} style = {{width:'150px',padding:"10px"}}/>
+                                        <input type="file" name="imageData2" onChange={this.onImageChange2} />
               </div>
               <div className="form-group">
               </div>
