@@ -120,7 +120,7 @@ class AddProduct extends React.Component {
     var pdtId = window.location.href.replace(Util.URL+"addProduct","")
     if(pdtId !== ""){
       fetch(Util.URL_REST+"api/product/getPdt/"+pdtId.replace("/",""), { 
-          method: "GET", 
+          method: "GET",  
           headers: Util.headersList
       }).then((res) => res.json())
         .then((json) => {
