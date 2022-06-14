@@ -9,48 +9,27 @@ class Cart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            coins: [],
+            carts: [],
             DataisLoaded: false,
             searchCoin: '',
         };
     }
 
-    UpdatePrice = (coinId) => {
-        fetch(Util.URL_REST + "api/coin/getMaketCap/" + coinId).then((res) => res.json())
-            .then((json) => {
-                console.log(json);
-                this.componentDidMount();
-            })
-
-    }
-    searchCoin = () => {
-
-        var coinId = this.state.searchCoin;
-        fetch(Util.URL_REST + "api/coin/getMaketCap/" + coinId)
-            .then((res) => res.json())
-            .then((json) => {
-                var arr = new Array(json);
-                if (json.statusCode === 2) {
-                    alert(json.message)
-                    return false;
-                }
-                this.componentDidMount(arr);
-            })
-
-    }
+ 
+    
     setPram = (event) => {
         this.setState({ [event.target.name]: event.target.value.trim() });
     }
     componentDidMount(item) {
         if (item == null) {
-            fetch(Util.URL_REST + "api/coin/getAllCoin/" + 1, {
+            fetch(Util.URL_REST + "api/order/getListOrderTmt" ,{
                 method: "GET",
                 headers: Util.headersList
             }).then((res) => res.json())
                 .then((json) => {
                     console.log(json);
                     this.setState({
-                        coins: json,
+                        carts: json,
                         DataisLoaded: true
                     });
                 })
@@ -65,7 +44,7 @@ class Cart extends React.Component {
 
 
     render() {
-        const { DataisLoaded} = this.state;
+        const { DataisLoaded , carts} = this.state;
         if (!DataisLoaded) return <div>
             <h6 className="text-title-cl"> Plesea login.... </h6> </div>;
         else
@@ -87,46 +66,34 @@ class Cart extends React.Component {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td className="col-sm-8 col-md-6">
-                            <div className="media">
-                              <a className="thumbnail pull-left" href="#"> <img className="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style={{width: '72px', height: '72px'}} /> </a>
-                              <div className="media-body">
-                                <h4 className="media-heading"><a href="#">Product name</a></h4>
-                                <h5 className="media-heading"> by <a href="#">Brand name</a></h5>
-                                <span>Status: </span><span className="text-success"><strong>In Stock</strong></span>
-                              </div>
-                            </div></td>
-                          <td className="col-sm-1 col-md-1" style={{textAlign: 'center'}}>
-                            <input type="email" className="form-control" id="exampleInputEmail1" defaultValue={3} />
-                          </td>
-                          <td className="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-                          <td className="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-                          <td className="col-sm-1 col-md-1">
-                            <button type="button" className="btn btn-danger">
-                              <span className="glyphicon glyphicon-remove" /> Remove
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td className="col-md-6">
-                            <div className="media">
-                              <a className="thumbnail pull-left" href="#"> <img className="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style={{width: '72px', height: '72px'}} /> </a>
-                              <div className="media-body">
-                                <h4 className="media-heading"><a href="#">Product name</a></h4>
-                                <h5 className="media-heading"> by <a href="#">Brand name</a></h5>
-                                <span>Status: </span><span className="text-warning"><strong>Leaves warehouse in 2 - 3 weeks</strong></span>
-                              </div>
-                            </div></td>
-                          <td className="col-md-1" style={{textAlign: 'center'}}>
-                            <input type="email" className="form-control" id="exampleInputEmail1" defaultValue={2} />
-                          </td>
-                          <td className="col-md-1 text-center"><strong>$4.99</strong></td>
-                          <td className="col-md-1 text-center"><strong>$9.98</strong></td>
-                          <td className="col-md-1">
-                            <button type="button" className="btn btn-danger">
-                              <span className="glyphicon glyphicon-remove" /> Remove
-                            </button></td>
-                        </tr>
+                        
+                        {
+                            carts.map(
+                              cart =>
+
+                          <tr>
+                            <td className="col-sm-8 col-md-6">
+                              <div className="media">
+                                <a className="thumbnail pull-left" href="#"> <img className="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style={{width: '72px', height: '72px'}} /> </a>
+                                <div className="media-body">
+                                  <h4 className="media-heading"><a href="#">Product name</a></h4>
+                                  <h5 className="media-heading"> by <a href="#">{cart.pdtId}</a></h5>
+                                  <span>Status: </span><span className="text-success"><strong>In Stock</strong></span>
+                                </div>
+                              </div></td>
+                            <td className="col-sm-1 col-md-1" style={{textAlign: 'center'}}>
+                              <input type="email" className="form-control" id="exampleInputEmail1" defaultValue={3} />
+                            </td>
+                            <td className="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
+                            <td className="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+                            <td className="col-sm-1 col-md-1">
+                              <button type="button" className="btn btn-danger">
+                                <span className="glyphicon glyphicon-remove" /> Remove
+                              </button></td>
+                         </tr>
+                        
+                        )
+                        }
                         <tr>
                           <td> &nbsp; </td>
                           <td> &nbsp; </td>
