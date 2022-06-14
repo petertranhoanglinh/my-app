@@ -1,9 +1,9 @@
-import './css/cart.css'
+import {Link} from 'react-router-dom';
 import React from "react";
 import Util from "./Util";
 
 
-class Coin extends React.Component {
+class Cart extends React.Component {
 
     // Constructor
     constructor(props) {
@@ -154,7 +154,8 @@ class Coin extends React.Component {
                           <td> &nbsp; </td>
                           <td>
                             <button type="button" className="btn btn-default">
-                              <span className="glyphicon glyphicon-shopping-cart" /> Continue Shopping
+                            <Link to={'/listProduct'}>  <span className="glyphicon glyphicon-shopping-cart"> Continue Shopping</span></Link>
+                            
                             </button></td>
                           <td>
                             <button type="button" className="btn btn-success">
@@ -171,4 +172,4 @@ class Coin extends React.Component {
     }
 }
 
-export default Coin;
+export default Cart;
