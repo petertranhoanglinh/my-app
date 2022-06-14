@@ -14,6 +14,7 @@ import AddNotify from './components/AddNotify';
 import AddProduct from './components/AddProduct';
 import ListProduct from './components/ListProduct';
 import ProductDetail from './components/ProductDetail';
+import Cart from './components/Cart';
 
 function App(){
   return (
@@ -26,6 +27,7 @@ function App(){
         <Route path='/' element = {<Home></Home>}/>
         <Route path='/balance' element = {<Balance></Balance>}/>
         <Route path='/coin' element = {<Coin></Coin>}/>
+        <Route path='/cart' element = {<Cart></Cart>}/>
         <Route path='/signUp' element = {<SignUp></SignUp>}/>
         <Route path='/profile' element = {<Profile></Profile>}/>
         <Route path='/message' element = {<Message></Message>}/>
