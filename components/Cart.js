@@ -1,6 +1,8 @@
 import {Link} from 'react-router-dom';
 import React from "react";
 import Util from "./Util";
+import BlockUi from 'react-block-ui';
+import 'react-block-ui/style.css';
 
 
 class Cart extends React.Component {
@@ -12,6 +14,7 @@ class Cart extends React.Component {
             carts: [],
             DataisLoaded: false,
             ordtmt:0,
+            sumAmt:0,
         };
     }
     calcel = (ordtmt) => {
@@ -35,6 +38,7 @@ class Cart extends React.Component {
         this.setState({ [event.target.name]: event.target.value.trim() });
     }
     componentDidMount() {
+      var sumAmt1= 0;
             fetch(Util.URL_REST + "api/order/getListOrderTmt" ,{
                 method: "GET",
                 headers: Util.headersList
@@ -46,10 +50,14 @@ class Cart extends React.Component {
                       DataisLoaded: true,
                   });
                   }else{
-                    this.setState({
+                  for(var i = 0; i < json.length ;i++){
+                    sumAmt1 = json[i].amt + sumAmt1;
+                  }
+                  this.setState({
+                      DataisLoaded: true,
                       carts: json,
                       ordtmt:json[0].ordTmt,
-                      DataisLoaded: true,
+                      sumAmt:sumAmt1,
                   });
                   }              
                 })
@@ -57,12 +65,11 @@ class Cart extends React.Component {
               } 
     render() {
         const { DataisLoaded , carts} = this.state;
-        if (!DataisLoaded) return <div>
-            <h6 className="text-title-cl"> Plesea login.... </h6> </div>;
-        else
             return (
               <div>
+                  <BlockUi blocking={!DataisLoaded}></BlockUi>
               <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+              
               {/*---- Include the above in your HEAD tag --------*/}
               <div className="container">
                 <div className="row">
@@ -79,7 +86,7 @@ class Cart extends React.Component {
                         </tr>
                       </thead>
                       <tbody>
-                        
+                      
                         {
                             carts.map(
                               cart =>
@@ -111,26 +118,27 @@ class Cart extends React.Component {
                         
                         )
                         }
+                      
                         <tr>
                           <td> &nbsp; </td>
                           <td> &nbsp; </td>
                           <td> &nbsp; </td>
                           <td><h5>Subtotal</h5></td>
-                          <td className="text-right"><h5><strong>$24.59</strong></h5></td>
+                          <td className="text-right"><h5><strong>${this.state.sumAmt}</strong></h5></td>
                         </tr>
                         <tr>
                           <td> &nbsp; </td>
                           <td> &nbsp; </td>
                           <td> &nbsp; </td>
                           <td><h5>Estimated shipping</h5></td>
-                          <td className="text-right"><h5><strong>$6.94</strong></h5></td>
+                          <td className="text-right"><h5><strong>$0</strong></h5></td>
                         </tr>
                         <tr>
                           <td> &nbsp; </td>
                           <td> &nbsp; </td>
                           <td> &nbsp; </td>
-                          <td><h3>Total</h3></td>
-                          <td className="text-right"><h3><strong>$31.53</strong></h3></td>
+                          <td><h3>Total(USD)</h3></td>
+                          <td className="text-right"><h3><strong>${this.state.sumAmt}</strong></h3></td>
                         </tr>
                         <tr>
                           <td> &nbsp; </td>
