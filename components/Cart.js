@@ -11,38 +11,50 @@ class Cart extends React.Component {
         this.state = {
             carts: [],
             DataisLoaded: false,
-            searchCoin: '',
+            ordtmt:0,
         };
     }
-
+    calcel = (ordtmt) => {
+      if (window.confirm('Do you want to cancel order ?')){
+        fetch(Util.URL_REST+"api/order/cancel/"+ordtmt,{
+          method: "GET",
+          headers: Util.headersList
+          }).then((res) => res.json())
+         .then((json) => {
+              alert(json.returnMessage);
+              window.location.reload();
+          })  
+      }else{
+        return false;
+      }
+       
+    }
  
     
     setPram = (event) => {
         this.setState({ [event.target.name]: event.target.value.trim() });
     }
-    componentDidMount(item) {
-        if (item == null) {
+    componentDidMount() {
             fetch(Util.URL_REST + "api/order/getListOrderTmt" ,{
                 method: "GET",
                 headers: Util.headersList
             }).then((res) => res.json())
                 .then((json) => {
-                    console.log(json);
+                  if(json.length === 0){
                     this.setState({
-                        carts: json,
-                        DataisLoaded: true
-                    });
+                      carts: json,
+                      DataisLoaded: true,
+                  });
+                  }else{
+                    this.setState({
+                      carts: json,
+                      ordtmt:json[0].ordTmt,
+                      DataisLoaded: true,
+                  });
+                  }              
                 })
-        } else {
-            this.setState({
-                coins: item,
-                DataisLoaded: true
-            })
-        }
-
-    }
-
-
+        
+              } 
     render() {
         const { DataisLoaded , carts} = this.state;
         if (!DataisLoaded) return <div>
@@ -61,7 +73,8 @@ class Cart extends React.Component {
                           <th>Product</th>
                           <th>Quantity</th>
                           <th className="text-center">Price</th>
-                          <th className="text-center">Total</th>
+                          <th className="text-center">KindCoin</th>
+                          <th className="text-center">Total($)</th>
                           <th>&nbsp;</th>
                         </tr>
                       </thead>
@@ -70,22 +83,26 @@ class Cart extends React.Component {
                         {
                             carts.map(
                               cart =>
-
+                              
                           <tr>
                             <td className="col-sm-8 col-md-6">
                               <div className="media">
-                                <a className="thumbnail pull-left" href="#"> <img className="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style={{width: '72px', height: '72px'}} /> </a>
+                                <a className="thumbnail pull-left" href={Util.URL_REST+cart.image}> <img className="media-object" src={Util.URL_REST +cart.image} style={{width: '72px', height: '72px'}}/> </a>
                                 <div className="media-body">
-                                  <h4 className="media-heading"><a href="#">Product name</a></h4>
-                                  <h5 className="media-heading"> by <a href="#">{cart.pdtId}</a></h5>
-                                  <span>Status: </span><span className="text-success"><strong>In Stock</strong></span>
+                                <Link to={'/productDetail/' + cart.pdtId}>
+                                  <h4 className="media-heading">{cart.pdtName}</h4>
+                                  <h5 className="media-heading">{cart.pdtId}</h5>
+                                </Link>
+                                  <span>Seller: </span><span className="text-success"><strong>{cart.createBy}</strong></span>
                                 </div>
+                            
                               </div></td>
                             <td className="col-sm-1 col-md-1" style={{textAlign: 'center'}}>
-                              <input type="email" className="form-control" id="exampleInputEmail1" defaultValue={3} />
+                              <input type="email" className="form-control" id="exampleInputEmail1" defaultValue={cart.qty} />
                             </td>
-                            <td className="col-sm-1 col-md-1 text-center"><strong>$4.87</strong></td>
-                            <td className="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
+                            <td className="col-sm-1 col-md-1 text-center"><strong>{cart.pricePdt}</strong></td>
+                            <td className="col-sm-1 col-md-1 text-center"><strong>{cart.kindCoin}</strong></td>
+                            <td className="col-sm-1 col-md-1 text-center"><strong>{cart.amt}</strong></td>
                             <td className="col-sm-1 col-md-1">
                               <button type="button" className="btn btn-danger">
                                 <span className="glyphicon glyphicon-remove" /> Remove
@@ -118,12 +135,14 @@ class Cart extends React.Component {
                         <tr>
                           <td> &nbsp; </td>
                           <td> &nbsp; </td>
-                          <td> &nbsp; </td>
-                          <td>
-                            <button type="button" className="btn btn-default">
-                            <Link to={'/listProduct'}>  <span className="glyphicon glyphicon-shopping-cart"> Continue Shopping</span></Link>
-                            
-                            </button></td>
+                          <td> 
+                          <button type="button" class="btn btn-danger" onClick={() => this.calcel(this.state.ordtmt)}>Cancel</button>
+                           </td>
+                           <td>                            
+                              <button type="button" className="btn btn-default">
+                              <Link to={'/listProduct'}>  <span className="glyphicon glyphicon-shopping-cart"> Continue Shopping</span></Link>
+                              </button>
+                            </td>
                           <td>
                             <button type="button" className="btn btn-success">
                               Checkout <span className="glyphicon glyphicon-play" />
