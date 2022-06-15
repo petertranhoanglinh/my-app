@@ -80,7 +80,6 @@ class Cart extends React.Component {
                           <th>Product</th>
                           <th>Quantity</th>
                           <th className="text-center">Price</th>
-                          <th className="text-center">KindCoin</th>
                           <th className="text-center">Total($)</th>
                           <th>&nbsp;</th>
                         </tr>
@@ -107,8 +106,7 @@ class Cart extends React.Component {
                             <td className="col-sm-1 col-md-1" style={{textAlign: 'center'}}>
                               <input type="email" className="form-control" id="exampleInputEmail1" defaultValue={cart.qty} />
                             </td>
-                            <td className="col-sm-1 col-md-1 text-center"><strong>{cart.pricePdt}</strong></td>
-                            <td className="col-sm-1 col-md-1 text-center"><strong>{cart.kindCoin}</strong></td>
+                            <td className="col-sm-1 col-md-1 text-center"><strong>{cart.pricePdt}{" "}{cart.kindCoin}</strong></td>
                             <td className="col-sm-1 col-md-1 text-center"><strong>{cart.amt}</strong></td>
                             <td className="col-sm-1 col-md-1">
                               <button type="button" className="btn btn-danger">
